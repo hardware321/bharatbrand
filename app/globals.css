@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap'); 
+
+@keyframes scan {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    top: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 210 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+
+    --primary: 210 95% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 15% 96%;
+    --secondary-foreground: 210 25% 15%;
+
+    --muted: 210 10% 96%;
+    --muted-foreground: 210 20% 45%;
+
+    --accent: 220 90% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 15% 90%;
+    --input: 210 15% 90%;
+    --ring: 210 95% 25%;
+
+    /* Medical theme colors */
+    --medical-primary: 210 95% 25%;
+    --medical-primary-light: 210 85% 35%;
+    --medical-primary-dark: 210 100% 20%;
+    --medical-secondary: 195 85% 30%;
+    --medical-accent: 220 90% 35%;
+    --medical-text: 210 25% 15%;
+    --medical-text-light: 210 20% 45%;
+    --medical-background: 0 0% 100%;
+    --medical-surface: 210 15% 98%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--medical-primary)), hsl(var(--medical-secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--medical-primary) / 0.7), hsl(var(--medical-primary-dark) / 0.6));
+    --gradient-card: linear-gradient(135deg, hsl(var(--medical-surface)), hsl(var(--background)));
+
+    /* Shadows */
+    --shadow-medical: 0 10px 30px -5px hsl(var(--medical-primary) / 0.1);
+    --shadow-card: 0 4px 20px -2px hsl(var(--medical-primary) / 0.08);
+    --shadow-button: 0 4px 15px -3px hsl(var(--medical-primary) / 0.2);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 210 25% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 25% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 210 25% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 180 85% 55%;
+    --primary-foreground: 210 25% 8%;
+
+    --secondary: 210 20% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 20% 15%;
+    --muted-foreground: 210 15% 65%;
+
+    --accent: 180 85% 55%;
+    --accent-foreground: 210 25% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 20% 20%;
+    --input: 210 20% 20%;
+    --ring: 180 85% 55%;
+
+    /* Dark mode medical colors */
+    --medical-primary: 180 85% 55%;
+    --medical-primary-light: 180 75% 70%;
+    --medical-primary-dark: 180 95% 45%;
+    --medical-secondary: 200 85% 55%;
+    --medical-accent: 160 85% 55%;
+    --medical-text: 0 0% 98%;
+    --medical-text-light: 210 15% 75%;
+    --medical-background: 210 25% 8%;
+    --medical-surface: 210 20% 12%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--medical-primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--medical-primary-dark));
+  }
+}
+
+@layer components {
+  .medical-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .medical-shadow {
+    box-shadow: var(--shadow-medical);
+  }
+
+  .medical-transition {
+    transition: var(--transition-smooth);
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('./fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GilroyBold';
+  src: url('./fonts/Gilroy-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GilroyMedium';
+  src: url('./fonts/Gilroy-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GilroyLight';
+  src: url('./fonts/Gilroy-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'CharterSerif';
+  src: url('./fonts/CharterRegular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'KievitSerif';
+  src: url('./fonts/KievitSerif-Book.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'hevelticneu';
+  src: url('./fonts/helvetica-neue-5/HelveticaNeueThin.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'arial';
+  src: url('./fonts/arial/ARIAL.TTF') format('truetype');
+}
+
+
+
