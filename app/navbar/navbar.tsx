@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isBookingLoading, setIsBookingLoading] = useState(false);
   const pathname = usePathname();
 
-  const navigation = [
+  const navigation = [       
     { name: 'Home', href: '/' },
     { name: 'Diagnostic Services', href: '/diagnostic-services' },
     { name: 'Interventional Radiology', href: '/interventional-radiology' },
