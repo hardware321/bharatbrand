@@ -291,7 +291,7 @@ const Hero: React.FC = () => {
             </p>
             <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-1000 delay-500 ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <Link href="/diagnostic-services">
-                <Button size="lg" className="bg-blue text-blue-600 hover:bg-blue-50 font-semibold w-full sm:w-auto transform hover:scale-105 transition-all duration-200">
+                <Button size="lg" className="bg-blue text-blue-600 hover:bg-blue-50 font-semibold  sm:w-auto transform hover:scale-105 transition-all duration-200">
                   Book Test Now
                 </Button>
               </Link>
