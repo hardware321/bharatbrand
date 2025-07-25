@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Menu, X, Phone, MapPin, Loader2 } from 'lucide-react';
-import logo from "../logo.jpg"
+import logo from "../logonew.jpg"
 import Image from 'next/image';
 
 const Navbar = () => {
@@ -93,6 +93,7 @@ const Navbar = () => {
           </nav>
 
           {/* CTA Button */}
+
           <div className="hidden lg:flex items-center space-x-4">
             <button 
               onClick={handleBookAppointment}
