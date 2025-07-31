@@ -76,7 +76,7 @@ const NimaayaHeroSection = () => {
   };
 
   return (
-    <div className="relative h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)' }}>
+    <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)' }}>
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -91,26 +91,36 @@ const NimaayaHeroSection = () => {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
             style={{ 
               backgroundImage: `url(${slide.image})`,
-              transform: index === currentSlide ? 'scale(1)' : 'scale(1.1)'
+              transform: index === currentSlide ? 'scale(1)' : 'scale(1.1)',
+              // Better mobile positioning - center and contain for small screens
+              backgroundSize: window.innerWidth < 768 ? 'cover' : 'cover',
+              backgroundPosition: window.innerWidth < 768 ? 'center center' : 'center center'
             }}
           />
-          {/* Top 10% gradient overlay for premium effect */}
+          {/* Enhanced gradient overlay with mobile-specific adjustments */}
           <div 
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
             style={{
-              background: `linear-gradient(to bottom, 
-                #44373740 0%, 
-                #98728430 5%, 
-                #D5AA9F20 8%, 
-                transparent 10%
-              )`
+              background: window.innerWidth < 768 
+                ? `linear-gradient(to bottom, 
+                    #44373780 0%, 
+                    #98728450 10%, 
+                    #D5AA9F30 20%, 
+                    rgba(68, 55, 55, 0.4) 100%
+                  )`
+                : `linear-gradient(to bottom, 
+                    #44373740 0%, 
+                    #98728430 5%, 
+                    #D5AA9F20 8%, 
+                    transparent 10%
+                  )`
             }}
           />
         </div>
       ))}
 
       {/* Content */}
-      <div className="relative h-full flex items-center justify-center px-4 z-10">
+      <div className="relative h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-6xl mx-auto text-center">
           {slides.map((slide, index) => (
             <div
@@ -122,21 +132,21 @@ const NimaayaHeroSection = () => {
               }`}
               style={{ display: index === currentSlide ? 'block' : 'none' }}
             >
-              {/* Decorative Heart Icon */}
-              <div className="mb-8 flex justify-center">
+              {/* Decorative Heart Icon - Responsive sizing */}
+              <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
                 <div className="relative">
                   <div 
-                    className="w-20 h-20 rounded-full flex items-center justify-center animate-pulse shadow-2xl"
+                    className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center animate-pulse shadow-2xl"
                     style={{ background: 'linear-gradient(135deg, #D5AA9F 0%, #E8D5B7 50%, #F4E1D2 100%)' }}
                   >
-                    <Heart size={32} className="text-white fill-current" style={{ color: '#443737' }} />
+                    <Heart size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 26 : 32} className="text-white fill-current" style={{ color: '#443737' }} />
                   </div>
-                  <div className="absolute -inset-4 border-2 rounded-full animate-ping" style={{ borderColor: '#E8D5B7' }}></div>
+                  <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 border-2 rounded-full animate-ping opacity-75" style={{ borderColor: '#E8D5B7' }}></div>
                 </div>
               </div>
 
-              {/* Main Title */}
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+              {/* Main Title - Better mobile typography */}
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 leading-tight px-2">
                 <span 
                   className="bg-clip-text text-transparent drop-shadow-lg"
                   style={{ 
@@ -149,20 +159,20 @@ const NimaayaHeroSection = () => {
                 </span>
               </h1>
               
-              {/* Subtitle */}
-              <h2 className="text-2xl md:text-4xl mb-6 font-light leading-relaxed" style={{ color: '#F4E1D2' }}>
+              {/* Subtitle - Mobile responsive */}
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-3 sm:mb-4 lg:mb-6 font-light leading-relaxed px-2" style={{ color: '#F4E1D2' }}>
                 {slide.subtitle}
               </h2>
               
-              {/* Description */}
-              <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto leading-relaxed" style={{ color: '#E8D5B7' }}>
+              {/* Description - Better mobile readability */}
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4" style={{ color: '#E8D5B7' }}>
                 {slide.description}
               </p>
               
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              {/* CTA Buttons - Mobile stacked layout */}
+              <div className="flex flex-col gap-4 sm:gap-6 justify-center items-center px-4">
                 <button 
-                  className="group px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-xl min-w-[200px]"
+                  className="group w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-xl min-w-[180px] sm:min-w-[200px]"
                   style={{ 
                     background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)',
                     color: '#443737'
@@ -170,12 +180,12 @@ const NimaayaHeroSection = () => {
                 >
                   <span className="flex items-center justify-center gap-2">
                     {slide.cta}
-                    <div className="w-2 h-2 rounded-full group-hover:animate-bounce" style={{ backgroundColor: '#443737' }}></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full group-hover:animate-bounce" style={{ backgroundColor: '#443737' }}></div>
                   </span>
                 </button>
                 
                 <button 
-                  className="group border-2 px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[200px] hover:bg-white"
+                  className="group border-2 w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[180px] sm:min-w-[200px] hover:bg-white"
                   style={{ 
                     borderColor: '#E8D5B7',
                     color: '#F4E1D2'
@@ -193,7 +203,7 @@ const NimaayaHeroSection = () => {
                 >
                   <span className="flex items-center justify-center gap-2">
                     {slide.secondary}
-                    <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight size={window.innerWidth < 640 ? 16 : 20} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
               </div>
@@ -202,12 +212,12 @@ const NimaayaHeroSection = () => {
         </div>
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between px-6 z-20">
+      {/* Navigation Controls - Smaller on mobile */}
+      <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between px-2 sm:px-4 lg:px-6 z-20">
         <button
           onClick={prevSlide}
           disabled={isTransitioning}
-          className="group p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
+          className="group p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
           style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
           onMouseEnter={(e) => {
             const target = e.target as HTMLElement;
@@ -218,13 +228,13 @@ const NimaayaHeroSection = () => {
             target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
           }}
         >
-          <ChevronLeft size={28} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronLeft size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 24 : 28} className="transition-colors" style={{ color: '#F4E1D2' }} />
         </button>
         
         <button
           onClick={nextSlide}
           disabled={isTransitioning}
-          className="group p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
+          className="group p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
           style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
           onMouseEnter={(e) => {
             const target = e.target as HTMLElement;
@@ -235,20 +245,22 @@ const NimaayaHeroSection = () => {
             target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
           }}
         >
-          <ChevronRight size={28} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronRight size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 24 : 28} className="transition-colors" style={{ color: '#F4E1D2' }} />
         </button>
       </div>
 
-      {/* Bottom Controls */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-6 z-20">
-        {/* Slide Indicators */}
-        <div className="flex space-x-3">
+      {/* Bottom Controls - Mobile responsive */}
+      <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 sm:gap-4 lg:gap-6 z-20">
+        {/* Slide Indicators - Smaller on mobile */}
+        <div className="flex space-x-2 sm:space-x-3">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               className={`transition-all duration-300 rounded-full ${
-                index === currentSlide ? 'w-12 h-3' : 'w-3 h-3 hover:scale-125'
+                index === currentSlide 
+                  ? 'w-8 h-2 sm:w-10 lg:w-12 sm:h-2.5 lg:h-3' 
+                  : 'w-2 h-2 sm:w-2.5 lg:w-3 sm:h-2.5 lg:h-3 hover:scale-125'
               }`}
               style={{
                 background: index === currentSlide 
@@ -271,17 +283,16 @@ const NimaayaHeroSection = () => {
           ))}
         </div>
 
-        {/* Auto Play Control */}
+        {/* Auto Play Control - Smaller on mobile */}
         <button
           onClick={toggleAutoPlay}
-          className="p-3 rounded-full transition-all duration-300 group backdrop-blur-md"
+          className="p-2 sm:p-2.5 lg:p-3 rounded-full transition-all duration-300 group backdrop-blur-md"
           style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
-        
         >
           {isAutoPlay ? (
-            <Pause size={16} style={{ color: '#F4E1D2' }} />
+            <Pause size={window.innerWidth < 640 ? 12 : window.innerWidth < 1024 ? 14 : 16} style={{ color: '#F4E1D2' }} />
           ) : (
-            <Play size={16} style={{ color: '#F4E1D2' }} />
+            <Play size={window.innerWidth < 640 ? 12 : window.innerWidth < 1024 ? 14 : 16} style={{ color: '#F4E1D2' }} />
           )}
         </button>
       </div>
@@ -297,12 +308,12 @@ const NimaayaHeroSection = () => {
         />
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating Elements - Fewer on mobile */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(window.innerWidth < 640 ? 3 : 6)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 rounded-full animate-bounce"
+            className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-bounce"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,

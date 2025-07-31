@@ -57,9 +57,9 @@ const NimaayaNavbar = () => {
 
   return (
     <>
-      {/* Top Contact Bar */}
+      {/* Top Contact Bar - Desktop Only */}
       <div 
-        className="text-white py-3 px-4 text-sm"
+        className="hidden lg:block text-white py-3 px-4 text-sm"
         style={{ 
           background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)'
         }}
