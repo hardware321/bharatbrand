@@ -6,6 +6,31 @@ const NimaayaHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Handle window width safely
+  useEffect(() => {
+    setIsMounted(true);
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Set initial width
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Helper function to get responsive values
+  const getResponsiveValue = (mobile: number, tablet: number, desktop: number) => {
+    if (!isMounted) return desktop; // Default to desktop during SSR
+    if (windowWidth < 640) return mobile;
+    if (windowWidth < 1024) return tablet;
+    return desktop;
+  };
 
   const slides = [
     {
@@ -75,6 +100,24 @@ const NimaayaHeroSection = () => {
     setIsAutoPlay(!isAutoPlay);
   };
 
+  // Get mobile-friendly gradient based on screen size
+  const getMobileGradient = () => {
+    const isMobile = windowWidth < 768;
+    return isMobile 
+      ? `linear-gradient(to bottom, 
+          #44373780 0%, 
+          #98728450 10%, 
+          #D5AA9F30 20%, 
+          rgba(68, 55, 55, 0.4) 100%
+        )`
+      : `linear-gradient(to bottom, 
+          #44373740 0%, 
+          #98728430 5%, 
+          #D5AA9F20 8%, 
+          transparent 10%
+        )`;
+  };
+
   return (
     <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)' }}>
       {/* Background Images */}
@@ -92,28 +135,20 @@ const NimaayaHeroSection = () => {
             style={{ 
               backgroundImage: `url(${slide.image})`,
               transform: index === currentSlide ? 'scale(1)' : 'scale(1.1)',
-              // Better mobile positioning - center and contain for small screens
-              backgroundSize: window.innerWidth < 768 ? 'cover' : 'cover',
-              backgroundPosition: window.innerWidth < 768 ? 'center center' : 'center center'
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center'
             }}
           />
-          {/* Enhanced gradient overlay with mobile-specific adjustments */}
+          {/* Enhanced gradient overlay */}
           <div 
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
             style={{
-              background: window.innerWidth < 768 
-                ? `linear-gradient(to bottom, 
-                    #44373780 0%, 
-                    #98728450 10%, 
-                    #D5AA9F30 20%, 
-                    rgba(68, 55, 55, 0.4) 100%
-                  )`
-                : `linear-gradient(to bottom, 
-                    #44373740 0%, 
-                    #98728430 5%, 
-                    #D5AA9F20 8%, 
-                    transparent 10%
-                  )`
+              background: isMounted ? getMobileGradient() : `linear-gradient(to bottom, 
+                #44373740 0%, 
+                #98728430 5%, 
+                #D5AA9F20 8%, 
+                transparent 10%
+              )`
             }}
           />
         </div>
@@ -139,7 +174,7 @@ const NimaayaHeroSection = () => {
                     className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center animate-pulse shadow-2xl"
                     style={{ background: 'linear-gradient(135deg, #D5AA9F 0%, #E8D5B7 50%, #F4E1D2 100%)' }}
                   >
-                    <Heart size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 26 : 32} className="text-white fill-current" style={{ color: '#443737' }} />
+                    <Heart size={getResponsiveValue(20, 26, 32)} className="text-white fill-current" style={{ color: '#443737' }} />
                   </div>
                   <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 border-2 rounded-full animate-ping opacity-75" style={{ borderColor: '#E8D5B7' }}></div>
                 </div>
@@ -203,7 +238,7 @@ const NimaayaHeroSection = () => {
                 >
                   <span className="flex items-center justify-center gap-2">
                     {slide.secondary}
-                    <ChevronRight size={window.innerWidth < 640 ? 16 : 20} className="group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight size={getResponsiveValue(16, 20, 20)} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
               </div>
@@ -228,7 +263,7 @@ const NimaayaHeroSection = () => {
             target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
           }}
         >
-          <ChevronLeft size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 24 : 28} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronLeft size={getResponsiveValue(20, 24, 28)} className="transition-colors" style={{ color: '#F4E1D2' }} />
         </button>
         
         <button
@@ -245,7 +280,7 @@ const NimaayaHeroSection = () => {
             target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
           }}
         >
-          <ChevronRight size={window.innerWidth < 640 ? 20 : window.innerWidth < 1024 ? 24 : 28} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronRight size={getResponsiveValue(20, 24, 28)} className="transition-colors" style={{ color: '#F4E1D2' }} />
         </button>
       </div>
 
@@ -290,9 +325,9 @@ const NimaayaHeroSection = () => {
           style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
         >
           {isAutoPlay ? (
-            <Pause size={window.innerWidth < 640 ? 12 : window.innerWidth < 1024 ? 14 : 16} style={{ color: '#F4E1D2' }} />
+            <Pause size={getResponsiveValue(12, 14, 16)} style={{ color: '#F4E1D2' }} />
           ) : (
-            <Play size={window.innerWidth < 640 ? 12 : window.innerWidth < 1024 ? 14 : 16} style={{ color: '#F4E1D2' }} />
+            <Play size={getResponsiveValue(12, 14, 16)} style={{ color: '#F4E1D2' }} />
           )}
         </button>
       </div>
@@ -309,21 +344,23 @@ const NimaayaHeroSection = () => {
       </div>
 
       {/* Floating Elements - Fewer on mobile */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(window.innerWidth < 640 ? 3 : 6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-bounce"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-              backgroundColor: 'rgba(232, 213, 183, 0.3)'
-            }}
-          />
-        ))}
-      </div>
+      {isMounted && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(getResponsiveValue(3, 6, 6))].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-bounce"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 2}s`,
+                backgroundColor: 'rgba(232, 213, 183, 0.3)'
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
