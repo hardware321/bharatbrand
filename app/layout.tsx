@@ -46,7 +46,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
             <main className='w-full '>
               <Analytics/>
               <SpeedInsights/>

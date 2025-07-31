@@ -1,208 +1,377 @@
-'use client';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown } from 'lucide-react';
 
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { Menu, X, Phone, MapPin, Loader2 } from 'lucide-react';
-import logo from "../logonew.jpg"
-import Image from 'next/image';
+const NimaayaNavbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBookingLoading, setIsBookingLoading] = useState(false);
-  const pathname = usePathname();
-
-  const navigation = [       
-    { name: 'Home', href: '/' },
-    { name: 'Diagnostic Services', href: '/diagnostic-services' },
-    { name: 'Interventional Radiology', href: '/interventional-radiology' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Blog & Testimonials', href: '/blog' },
-
-    { name: 'Contact', href: '/contact' },
+  const navItems = [
+    { 
+      name: 'About Us', 
+      href: '#',
+      dropdown: ['Our Story', 'Mission & Vision', 'Team', 'Awards']
+    },
+    { 
+      name: 'Video Consultation', 
+      href: '#'
+    },
+    { 
+      name: 'Treatments', 
+      href: '#',
+      dropdown: ['IVF Treatment', 'Gynecology', 'Fertility Services', 'Maternity Care']
+    },
+    { 
+      name: 'Our IVF Centers', 
+      href: '#',
+      dropdown: ['Surat Center', 'Vadodara Center', 'Ahmedabad Center']
+    },
+    { 
+      name: 'Facilities', 
+      href: '#',
+      dropdown: ['Laboratory', 'Operation Theatre', 'Recovery Rooms', 'Equipment']
+    },
+    { 
+      name: 'Contact Us', 
+      href: '#'
+    },
+    { 
+      name: 'IVF Training', 
+      href: '#'
+    }
   ];
 
-  const handleBookAppointment = () => {
-    setIsBookingLoading(true);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
     
-    // Simulate booking process (replace with actual booking logic)
-    setTimeout(() => {
-      setIsBookingLoading(false);
-      // Add your booking logic here
-      alert('Redirecting to booking page...');
-    }, 2000);
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const isActive = (path: string) => {
-    return pathname === path;
+  const handleDropdownToggle = (itemName: string) => {
+    setActiveDropdown(activeDropdown === itemName ? null : itemName);
   };
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
-      {/* Top bar */}
-      <div className="bg-blue-600 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-1">
-                <Phone className="h-4 w-4" />
-                <span>Emergency: +91-XXXX-XXXXXX</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <MapPin className="h-4 w-4" />
-                <span>Udaipur, Rajasthan</span>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <span>Home Test Available | NABL & CAP Accredited</span>
+    <>
+      {/* Top Contact Bar */}
+      <div 
+        className="text-white py-3 px-4 text-sm"
+        style={{ 
+          background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)'
+        }}
+      >
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
+          <div className="flex flex-wrap gap-6">
+            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+              <Phone size={16} className="animate-pulse group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline group-hover:text-yellow-200 transition-colors">APPOINTMENTS: </span>
+              <span className="group-hover:text-yellow-200 transition-colors">Surat: +91-261-6119900 | Vadodara: +91-265-6839900 | Ahmedabad: +91-7961199900</span>
+            </span>
+          </div>
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+              <Mail size={16} className="group-hover:scale-110 transition-transform" />
+              <span className="group-hover:text-yellow-200 transition-colors">hello@nimaaya.com</span>
+            </span>
+            <button 
+              className="px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105 shadow-lg"
+              style={{ 
+                background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)',
+                color: '#443737'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.background = 'linear-gradient(135deg, #F4E1D2 0%, #E8D5B7 100%)';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.background = 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)';
+              }}
+            >
+              Book Appointment
+            </button>
+            <div className="flex gap-3">
+              <Facebook size={18} className="cursor-pointer transition-all transform hover:scale-110" style={{ color: '#F4E1D2' }} 
+                onMouseEnter={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = '#E8D5B7';
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = '#F4E1D2';
+                }}
+              />
+              <Instagram size={18} className="cursor-pointer transition-all transform hover:scale-110" style={{ color: '#F4E1D2' }}
+                onMouseEnter={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = '#E8D5B7';
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = '#F4E1D2';
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+      {/* Main Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${
+        isScrolled 
+          ? 'top-0 shadow-2xl py-2' 
+          : 'py-4'
+      }`}
+      style={{
+        background: isScrolled 
+          ? 'rgba(244, 225, 210, 0.95)' 
+          : 'transparent',
+        backdropFilter: isScrolled ? 'blur(16px)' : 'none',
+        borderBottom: isScrolled ? '1px solid rgba(152, 114, 132, 0.2)' : 'none'
+      }}
+      >
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center">
-                          <Image src={logo} alt="Logo" width={200} height={40} />
-
-            {/* <div className="bg-blue-600 text-white p-3 rounded-lg mr-4">
-            </div> */}
-            {/* <div>
-              <h1 className="text-2xl font-bold text-gray-900">Mega Diagnostics</h1>
-              <p className="text-sm text-gray-600">Udaipur</p>
-            </div> */}
+          <div className="flex items-center group cursor-pointer">
+            <div 
+              className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-xl"
+              style={{
+                background: isScrolled 
+                  ? 'linear-gradient(135deg, #987284 0%, #D5AA9F 50%, #E8D5B7 100%)' 
+                  : 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)'
+              }}
+            >
+              <span 
+                className="text-2xl font-bold transition-colors duration-500"
+                style={{ color: isScrolled ? '#F4E1D2' : '#443737' }}
+              >
+                N
+              </span>
+            </div>
+            <div className="ml-4">
+              <h1 
+                className="text-2xl font-bold transition-all duration-500"
+                style={{ 
+                  color: isScrolled ? '#443737' : '#F4E1D2',
+                  textShadow: isScrolled ? 'none' : '0 2px 4px rgba(68, 55, 55, 0.3)'
+                }}
+              >
+                NIMAAYA
+              </h1>
+              <p 
+                className="text-sm transition-all duration-500"
+                style={{ 
+                  color: isScrolled ? '#987284' : '#E8D5B7',
+                  textShadow: isScrolled ? 'none' : '0 1px 2px rgba(68, 55, 55, 0.2)'
+                }}
+              >
+                women's centre for health
+              </p>
+            </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`text-sm font-medium transition-colors ${
-                  isActive(item.href)
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1'
-                    : 'text-gray-700 hover:text-blue-600'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA Button */}
-
-          <div className="hidden lg:flex items-center space-x-4">
-            <button 
-              onClick={handleBookAppointment}
-              disabled={isBookingLoading}
-              className={`
-                relative overflow-hidden
-                bg-blue-600 hover:bg-blue-700 
-                disabled:bg-blue-400 disabled:cursor-not-allowed
-                text-white px-6 py-2 rounded-lg font-medium 
-                transition-all duration-300 ease-in-out
-                transform hover:scale-105 active:scale-95
-                ${isBookingLoading ? 'animate-pulse' : ''}
-              `}
-            >
-              <span className={`flex items-center justify-center gap-2 ${isBookingLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}>
-                Book Appointment
-              </span>
-              
-              {/* Loading overlay */}
-              <div className={`
-                absolute inset-0 flex items-center justify-center
-                ${isBookingLoading ? 'opacity-100' : 'opacity-0'}
-                transition-opacity duration-200
-              `}>
-                <Loader2 className="h-5 w-5 animate-spin text-white" />
-                <span className="ml-2 text-white">Booking...</span>
-              </div>
-              
-              {/* Ripple effect on click */}
-              <div className={`
-                absolute inset-0 rounded-lg
-                ${isBookingLoading ? 'animate-ping bg-white opacity-20' : ''}
-              `}></div>
-            </button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <button
-              className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="lg:hidden bg-white border-t">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <nav className="flex flex-col space-y-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm font-medium py-2 transition-colors ${
-                    isActive(item.href)
-                      ? 'text-blue-600 border-l-4 border-blue-600 pl-4'
-                      : 'text-gray-700 hover:text-blue-600 pl-4'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <div key={item.name} className="relative group">
+                <button
+                  className="flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300"
+                  style={{ 
+                    color: isScrolled ? '#443737' : '#F4E1D2',
+                    background: 'transparent'
+                  }}
+                  onClick={() => item.dropdown && handleDropdownToggle(item.name)}
+                  onMouseEnter={(e) => {
+                    const target = e.target as HTMLElement;
+                    target.style.backgroundColor = isScrolled ? 'rgba(152, 114, 132, 0.1)' : 'rgba(244, 225, 210, 0.1)';
+                    target.style.color = isScrolled ? '#987284' : '#E8D5B7';
+                  }}
+                  onMouseLeave={(e) => {
+                    const target = e.target as HTMLElement;
+                    target.style.backgroundColor = 'transparent';
+                    target.style.color = isScrolled ? '#443737' : '#F4E1D2';
+                  }}
                 >
                   {item.name}
-                </Link>
-              ))}
-              <div className="pt-4">
-                <button 
-                  onClick={handleBookAppointment}
-                  disabled={isBookingLoading}
-                  className={`
-                    relative overflow-hidden
-                    bg-blue-600 hover:bg-blue-700 
-                    disabled:bg-blue-400 disabled:cursor-not-allowed
-                    text-white px-6 py-2 rounded-lg font-medium 
-                    transition-all duration-300 ease-in-out
-                    transform hover:scale-105 active:scale-95
-                    w-full
-                    ${isBookingLoading ? 'animate-pulse' : ''}
-                  `}
-                >
-                  <span className={`flex items-center justify-center gap-2 ${isBookingLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}>
-                    Book Appointment
-                  </span>
-                  
-                  {/* Loading overlay */}
-                  <div className={`
-                    absolute inset-0 flex items-center justify-center
-                    ${isBookingLoading ? 'opacity-100' : 'opacity-0'}
-                    transition-opacity duration-200
-                  `}>
-                    <Loader2 className="h-5 w-5 animate-spin text-white" />
-                    <span className="ml-2 text-white">Booking...</span>
-                  </div>
-                  
-                  {/* Ripple effect on click */}
-                  <div className={`
-                    absolute inset-0 rounded-lg
-                    ${isBookingLoading ? 'animate-ping bg-white opacity-20' : ''}
-                  `}></div>
+                  {item.dropdown && (
+                    <ChevronDown 
+                      size={16} 
+                      className={`transition-transform duration-300 ${
+                        activeDropdown === item.name ? 'rotate-180' : ''
+                      }`} 
+                    />
+                  )}
                 </button>
+                
+                {/* Dropdown Menu */}
+                {item.dropdown && (
+                  <div 
+                    className={`absolute top-full left-0 mt-2 w-56 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${
+                      activeDropdown === item.name 
+                        ? 'opacity-100 visible transform translate-y-0' 
+                        : 'opacity-0 invisible transform -translate-y-2'
+                    }`}
+                    style={{ 
+                      background: 'rgba(244, 225, 210, 0.98)',
+                      backdropFilter: 'blur(16px)',
+                      border: '1px solid rgba(152, 114, 132, 0.2)'
+                    }}
+                  >
+                    {item.dropdown.map((dropdownItem, index) => (
+                      <a
+                        key={dropdownItem}
+                        href="#"
+                        className="block px-4 py-3 transition-all duration-200"
+                        style={{ 
+                          color: '#443737',
+                          borderBottom: index < item.dropdown!.length - 1 ? '1px solid rgba(152, 114, 132, 0.1)' : 'none'
+                        }}
+                        onMouseEnter={(e) => {
+                          const target = e.target as HTMLElement;
+                          target.style.background = 'linear-gradient(135deg, rgba(213, 170, 159, 0.1) 0%, rgba(232, 213, 183, 0.1) 100%)';
+                          target.style.color = '#987284';
+                        }}
+                        onMouseLeave={(e) => {
+                          const target = e.target as HTMLElement;
+                          target.style.background = 'transparent';
+                          target.style.color = '#443737';
+                        }}
+                      >
+                        {dropdownItem}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
-            </nav>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="lg:hidden p-3 rounded-lg transition-all duration-300"
+            style={{ 
+              color: isScrolled ? '#443737' : '#F4E1D2'
+            }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onMouseEnter={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = isScrolled ? 'rgba(152, 114, 132, 0.1)' : 'rgba(244, 225, 210, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              const target = e.target as HTMLElement;
+              target.style.backgroundColor = 'transparent';
+            }}
+          >
+            <div className="relative w-6 h-6">
+              <Menu 
+                size={24} 
+                className={`absolute inset-0 transition-all duration-300 ${
+                  isMobileMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
+                }`} 
+              />
+              <X 
+                size={24} 
+                className={`absolute inset-0 transition-all duration-300 ${
+                  isMobileMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
+                }`} 
+              />
+            </div>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+          isMobileMenuOpen 
+            ? 'max-h-screen opacity-100' 
+            : 'max-h-0 opacity-0'
+        }`}>
+          <div 
+            className="shadow-xl"
+            style={{ 
+              background: 'rgba(244, 225, 210, 0.98)',
+              backdropFilter: 'blur(16px)',
+              borderTop: '1px solid rgba(152, 114, 132, 0.2)'
+            }}
+          >
+            <div className="px-4 py-4 space-y-2">
+              {navItems.map((item, index) => (
+                <div key={item.name}>
+                  <a
+                    href={item.href}
+                    className={`flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 ${
+                      isMobileMenuOpen ? 'animate-slide-in' : ''
+                    }`}
+                    style={{ 
+                      color: '#443737',
+                      animationDelay: `${index * 50}ms`
+                    }}
+                    onMouseEnter={(e) => {
+                      const target = e.target as HTMLElement;
+                      target.style.background = 'linear-gradient(135deg, rgba(213, 170, 159, 0.1) 0%, rgba(232, 213, 183, 0.1) 100%)';
+                      target.style.color = '#987284';
+                    }}
+                    onMouseLeave={(e) => {
+                      const target = e.target as HTMLElement;
+                      target.style.background = 'transparent';
+                      target.style.color = '#443737';
+                    }}
+                  >
+                    {item.name}
+                    {item.dropdown && <ChevronDown size={16} />}
+                  </a>
+                  {item.dropdown && (
+                    <div className="ml-4 space-y-1">
+                      {item.dropdown.map((dropdownItem) => (
+                        <a
+                          key={dropdownItem}
+                          href="#"
+                          className="block py-2 px-4 text-sm rounded-lg transition-all duration-200"
+                          style={{ color: '#987284' }}
+                          onMouseEnter={(e) => {
+                            const target = e.target as HTMLElement;
+                            target.style.backgroundColor = 'rgba(213, 170, 159, 0.1)';
+                            target.style.color = '#443737';
+                          }}
+                          onMouseLeave={(e) => {
+                            const target = e.target as HTMLElement;
+                            target.style.backgroundColor = 'transparent';
+                            target.style.color = '#987284';
+                          }}
+                        >
+                          {dropdownItem}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      )}
-    </header>
+      </nav>
+
+      <style jsx>{`
+        @keyframes slide-in {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out forwards;
+        }
+      `}</style>
+    </>
   );
 };
 
-export default Navbar;
+export default NimaayaNavbar;
