@@ -12,8 +12,6 @@ export default function Page() {
       <DiagnosticService />
       <IntervantionalRadiology />
       <Radiologyservices />
-      <About />
-
     </div>
  
   );

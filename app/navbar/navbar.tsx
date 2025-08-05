@@ -8,21 +8,22 @@ const MegaDiagnosticsNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
 
   const navItems = [
     { 
       name: 'About Us', 
-      href: '#',
+      href: 'about',
       dropdown: ['Our Story', 'Our Commitment', 'Our Team', 'Why Trust Us']
     },
     { 
       name: 'Radiology Services', 
-      href: '#',
+      href: '#radiology',
       dropdown: ['Digital X-Ray', 'CT Scan', 'MRI', 'Ultrasound & Doppler', 'Mammography', 'Echocardiography']
     },
     { 
       name: 'Pathology Services', 
-      href: '#',
+      href: '#radiology',
       dropdown: ['Clinical Pathology', 'Biochemistry', 'Microbiology', 'Immunology & Serology', 'Cytology', 'Histopathology']
     },
     { 
@@ -47,6 +48,10 @@ const MegaDiagnosticsNavbar = () => {
 
   const handleDropdownToggle = (itemName: string) => {
     setActiveDropdown(activeDropdown === itemName ? null : itemName);
+  };
+
+  const handleMobileDropdownToggle = (itemName: string) => {
+    setActiveMobileDropdown(activeMobileDropdown === itemName ? null : itemName);
   };
 
   return (
@@ -278,9 +283,9 @@ const MegaDiagnosticsNavbar = () => {
             <div className="px-4 py-4 space-y-2">
               {navItems.map((item, index) => (
                 <div key={item.name}>
-                  <a
-                    href={item.href}
-                    className={`flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 text-base font-semibold ${
+                  <button
+                    onClick={() => item.dropdown ? handleMobileDropdownToggle(item.name) : undefined}
+                    className={`w-full flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 text-base font-semibold text-left ${
                       isMobileMenuOpen ? 'animate-slide-in' : ''
                     }`}
                     style={{ 
@@ -298,31 +303,50 @@ const MegaDiagnosticsNavbar = () => {
                       target.style.color = '#4a1d4a';
                     }}
                   >
-                    {item.name}
-                    {item.dropdown && <ChevronDown size={16} />}
-                  </a>
+                    <a href={item.href} className="flex-1">
+                      {item.name}
+                    </a>
+                    {item.dropdown && (
+                      <ChevronDown 
+                        size={16} 
+                        className={`transition-transform duration-300 ${
+                          activeMobileDropdown === item.name ? 'rotate-180' : ''
+                        }`}
+                      />
+                    )}
+                  </button>
+                  
+                  {/* Mobile Dropdown Menu */}
                   {item.dropdown && (
-                    <div className="ml-4 space-y-1">
-                      {item.dropdown.map((dropdownItem) => (
-                        <a
-                          key={dropdownItem}
-                          href="#"
-                          className="block py-2 px-4 text-sm rounded-lg transition-all duration-200 font-medium"
-                          style={{ color: '#663366' }}
-                          onMouseEnter={(e) => {
-                            const target = e.target as HTMLElement;
-                            target.style.backgroundColor = 'rgba(102, 51, 102, 0.1)';
-                            target.style.color = '#4a1d4a';
-                          }}
-                          onMouseLeave={(e) => {
-                            const target = e.target as HTMLElement;
-                            target.style.backgroundColor = 'transparent';
-                            target.style.color = '#663366';
-                          }}
-                        >
-                          {dropdownItem}
-                        </a>
-                      ))}
+                    <div 
+                      className={`overflow-hidden transition-all duration-300 ${
+                        activeMobileDropdown === item.name 
+                          ? 'max-h-96 opacity-100' 
+                          : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div className="ml-4 space-y-1 py-2">
+                        {item.dropdown.map((dropdownItem) => (
+                          <a
+                            key={dropdownItem}
+                            href="#"
+                            className="block py-2 px-4 text-sm rounded-lg transition-all duration-200 font-medium"
+                            style={{ color: '#663366' }}
+                            onMouseEnter={(e) => {
+                              const target = e.target as HTMLElement;
+                              target.style.backgroundColor = 'rgba(102, 51, 102, 0.1)';
+                              target.style.color = '#4a1d4a';
+                            }}
+                            onMouseLeave={(e) => {
+                              const target = e.target as HTMLElement;
+                              target.style.backgroundColor = 'transparent';
+                              target.style.color = '#663366';
+                            }}
+                          >
+                            {dropdownItem}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -338,10 +362,12 @@ const MegaDiagnosticsNavbar = () => {
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Link href={"/Book"} >
                   <div className="relative flex items-center justify-center gap-2">
                     <Calendar size={18} className="group-hover:rotate-12 transition-transform duration-300" />
                     <span>Book Appointment</span>
                   </div>
+                  </Link>
                 </button>
               </div>
             </div>
