@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
 import {  Play, Pause } from 'lucide-react';
+import Link from 'next/link';
 
 const NimaayaHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -101,7 +102,7 @@ const NimaayaHeroSection = () => {
   };
 
   return (
-    <div className="relative h-[70vh] sm:h-[70vh] md:h-[80vh] pt-[40px] lg:h-screen overflow-hidden bg-gray-900">
+    <div className="relative h-[75vh] sm:h-[70vh] md:h-[80vh] pt-[45px] lg:h-screen overflow-hidden bg-gray-900">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -168,12 +169,14 @@ const NimaayaHeroSection = () => {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-700 ease-out ${
                 hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
               }`} style={{ transitionDelay: '800ms' }}>
+                <Link href="/Book" >
                 <button 
                   className="w-full sm:w-auto px-8 py-4 text-white font-semibold rounded-lg transition-all duration-200 min-w-[200px] hover:shadow-lg transform hover:scale-105"
                   style={{ background: 'linear-gradient(135deg, #4a1d4a 0%, #8b4a8b 100%)' }}
-                >
+                  >
                   {slide.cta}
                 </button>
+                  </Link>
                 
                 <button 
                   className="w-full sm:w-auto px-8 py-4 border-2 font-semibold rounded-lg transition-all duration-200 min-w-[200px] hover:shadow-lg transform hover:scale-105"
