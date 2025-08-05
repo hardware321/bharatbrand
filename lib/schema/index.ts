@@ -48,7 +48,25 @@ export const EmailFormschema = z
       .refine((email) => emailRegex.test(email), {
         message: "Please enter a valid email address.", // Provides validation feedback
       }),
-    created_at: z.string(), // Add additional validation if needed
+	  name: z.string().min(2, {
+		message: "Name is required",
+	}),
+	phone: z.string().min(2, {
+		message: "Phone is required",
+	}),
+	service: z.string().min(2, {
+		message: "Service is required",
+	}),
+	date: z.string().min(2, {
+		message: "Date is required",
+	}),
+	time: z.string().min(2, {
+		message: "Time is required",
+	}),
+	message: z.string().min(2, {
+		message: "Message is required",
+	}),
+
   });
 
 export type EmailFormschemaType = z.infer<typeof EmailFormschema>;

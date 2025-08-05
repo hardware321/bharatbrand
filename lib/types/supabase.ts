@@ -103,17 +103,32 @@ export type Database = {
       }
       emaildata: {
         Row: {
-          email: string
-          created_at: string
+         name: string;
+          email: string;
+          phone: string;
+          service: string;
+          date: string;
+          time: string;
+          message: string;
     
         }
         Insert: {
-                 email: string
-          created_at: string
+          name: string;
+          email: string;
+          phone: string;
+          service: string;
+          date: string;
+          time: string;
+          message: string;
         }
         Update: {
-                  email: string
-          created_at: string
+          name: string;
+          email: string;
+          phone: string;
+          service: string;
+          date: string;
+          time: string;
+          message: string;
         }
         Relationships: []
       }

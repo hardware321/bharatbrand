@@ -94,8 +94,13 @@ export const defaultBlog: IBlogDetial = {
 
 export const defaultEmail: IEmaildetail = {
 	id: " ",
-	created_at: "",
-	email: "",
+	name: '',
+    email: '',
+    phone: '',
+    service: '',
+    date: '',
+    time: '',
+    message: ''
 	
 
 };
