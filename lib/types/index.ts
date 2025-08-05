@@ -28,26 +28,26 @@ export type IBlogDetial = {
 	content:string;
 	author:string;
 };
+
+
+export type IEmaildetail = {
+	created_at: string;
+	id: string;
+	email: string;
+};
 export type IchapterDetails = {
 	catagory_id: number
 	chapter_name: string | null
 	content: string | null
 	course_id: string 
 	created_at: string
-	image: string 
 	description: string | null
 	id: number
 	instructor: string
 	module_id: string 
 	chapterno:string 
 	slug: string 
-	pdffiles:string
 };
-export type IchapterModules = {
-	chapter_name: string | null
-	chapterno:string 
-	slug: string 
-	module_id: string};
 
 export type IModule = {
    id: number
@@ -82,17 +82,6 @@ export type IAuthor = {
 	profile:string
 } ;
 export type Icourse ={
-	id: string;
-	banner_image: string;
-	Catogory_id: string;
-	created_at: string;
-	Description: string;
-	instructor: string;
-	Name: string;
-	price: string;
-	slug:string;
-} ;
-export type IcourseSubmit ={
 	banner_image: string;
 	Catogory_id: string;
 	created_at: string;

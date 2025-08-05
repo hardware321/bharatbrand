@@ -1,8 +1,36 @@
 "use server";
 import { createSupabaseServerClient } from "@/lib/supabase";
-import { IBlog, Icourse, IModule } from "@/lib/types";
-import { revalidatePath, unstable_noStore } from "next/cache";
+import { IBlog, IModule } from "@/lib/types";
+import { revalidatePath  } from "next/cache";
+import { BlogFormSchemaType } from "@/lib/schema";
+
+
+
 const DASHBOARD = "/dashboard/blog";
+
+
+export async function createEmail(data: {
+	email: string;
+	created_at: string;
+
+}) {
+
+
+	// returning data 
+
+	const supabase = await createSupabaseServerClient();
+	const emailresult = await supabase
+		.from("emaildata")
+		.insert(data)
+		.single();
+
+	console.log("Email result:", emailresult);
+
+    return emailresult;
+}
+
+
+
 
 export async function createBlog(data: {
 	content: string;
@@ -27,43 +55,9 @@ export async function createBlog(data: {
     return blogResult;
 }
 
-export async function adddidigitalproduct(data: {
-	product_title: string,
-	product_description: string,
-	category: string,
-	price: number,
-	discount_price: number,
-	product_type: string, // digital_download, service, consultation
-	delivery_method: string, // instant_download, email, scheduled_call
-	tags: string,
-	preview_images: string,
-	product_files: string, // For downloadable products
-	consultation_duration: string, // For consultation services
-	available_slots: string, // For services
-	skill_level: string, // beginner, intermediate, advanced
-	software_requirements: string,
-	file_formats: string,
-	license_type: string, // personal, commercial, extended
-	refund_policy: string, // no_refunds, 7_days, 30_days
-	status: string, // draft, active, inactive
-	featured: boolean,
-	user_id: string, // This would be populated from your auth system
-	
-}) {
-
-	const supabase = await createSupabaseServerClient();
-	const productResult = await supabase
-		.from("digital_products")
-		.insert(data)
-		.single();
-
-    return productResult;
-}
-
 export async function createlesson(data: {
 	catagory_id: number
 	chapter_name: string
-	image:string
 	content: string 
 	course_id: string 
 	created_at: string
@@ -72,7 +66,7 @@ export async function createlesson(data: {
 	module_id: string 
 	chapterno:string 
 	slug: string 
-	pdffiles:string
+	
 }) {
 
 	const supabase = await createSupabaseServerClient();
@@ -82,36 +76,6 @@ export async function createlesson(data: {
 		.single();
 
     return blogResult;
-}
-
-export async function savepdf(pdfFile: File) {
-	const supabase = await createSupabaseServerClient();
-	const filedata = await supabase.storage
-		.from("pdffiles")
-		.upload(`pdf/${pdfFile.name}`, pdfFile, {
-			cacheControl: '3600',
-			upsert: false 
-		  
-		  });
-
-		  console.log(filedata);
-
-    return filedata;
-}
-
-
-export async function listallimages() {
-	const supabase = await createSupabaseServerClient();
-	const { data, error } = await supabase.storage
-    .from('images')
-    .list('uploads', { limit: 100, offset: 0, sortBy: { column: 'name', order: 'asc' } });
-
-  if (error) {
-    console.error('Error fetching images:', error);
-    return [];
-  }
-
-  return data;
 }
 
 export async function createModule(data: {
@@ -135,16 +99,17 @@ export async function createModule(data: {
 
 export async function createCourse(data: {
 	banner_image: string;
-	created_at: string;
 	Catogory_id: string;
+	created_at: string;
 	Description: string;
-	instructor: string; 
+	instructor: string;
 	Name: string;
 	price: string;
 	slug: string;
+	
 }) {
+
 	const supabase = await createSupabaseServerClient();
-	console.log("this is submitable data ", data);
 	const CourseResult = await supabase
 		.from("course")
 		.insert(data)
@@ -184,17 +149,6 @@ export async function readBlog() {
 		.range(0, 7)
 		.order("created_at", { ascending: true });
 }
-export async function readchapter() {
-	const supabase = await createSupabaseServerClient();
-	return supabase
-		.from("chapters")
-		.select("*")
-		.range(0, 10)
-		.order("created_at", { ascending: true });
-}
-
-
-
 export async function readmoreblog() {
 	const supabase = await createSupabaseServerClient();
 	return supabase
@@ -204,6 +158,7 @@ export async function readmoreblog() {
 		.range(0, 35)
 		.order("created_at", { ascending: true });
 }
+
 
 
 export async function readcourse() {
@@ -243,11 +198,6 @@ export async function Coursebyadmin() {
 		.order("created_at", { ascending: true });
 		
 }
-
-export async function readBlogById(blogId: number) {
-	const supabase = await createSupabaseServerClient();
-	return supabase.from("blog").select("*").eq("id", blogId).single();
-}
 export async function readBlogIds() {
 	const supabase = await createSupabaseServerClient();
 	return supabase.from("blog").select("id");
@@ -262,49 +212,6 @@ export async function readBlogDeatailById(id : string) {
 		.single();
 }
 
-export async function readcoursebyid(id : string) {
-	const supabase = await createSupabaseServerClient();
-	return await supabase
-		.from("course")
-		.select("*")
-		.eq("slug", id)
-		.single();
-}
-export async function readchapterdetailsbyid(id : string) {
-	const supabase = await createSupabaseServerClient();
-	return await supabase
-		.from("chapters")
-		.select("*")
-		.eq("slug", id)
-		.single();
-}
-
-export async function coursedetailsbyid(id : string) {
-	const supabase = await createSupabaseServerClient();
-	return await supabase
-		.from("course")
-		.select("*")
-		.eq("slug", id)
-		.single();
-}
-
-
-
-export async function getallimages() {
-	const supabase = await createSupabaseServerClient();
-	return await supabase.storage.from("images").list('images');
-}
-
-// export async function readBlogContent(blogId: string) {
-// 	unstable_noStore();
-// 	const supabase = await createSupabaseServerClient();
-// 	return await supabase
-// 		.from("blog_content")
-// 		.select("content")
-// 		.eq("blog_id", blogId)
-// 		.single();
-// }
-
 export async function updateBlogById(blogId: string, data: IBlog) {
 	const supabase = await createSupabaseServerClient();
 	const result = await supabase.from("blog").update(data).eq("id", blogId);
@@ -313,9 +220,21 @@ export async function updateBlogById(blogId: string, data: IBlog) {
 	return JSON.stringify(result);
 }
 
-
-
-
+export async function updateBlogDetail(
+	id: string,
+	data: BlogFormSchemaType
+) {
+	const supabase = await createSupabaseServerClient();
+	const resultBlog = await supabase
+		.from("blog")
+		.update(data)
+		.eq("id", id);
+	if (resultBlog) {
+		return (resultBlog);
+	} else {
+		revalidatePath(DASHBOARD);
+	}
+}
 
 export async function deleteBlogById(blogId: string) {
 	console.log("deleting blog post")
@@ -354,28 +273,19 @@ export async function deletechapterbyid(chapter_id: number) {
 
 
 export async function readmodulesbycourseId(courseId: string) {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
+	await new Promise((resolve) => setTimeout(resolve, 2000));
 	const supabase = await createSupabaseServerClient();
 	return supabase.from("modules").select("*").eq("course_id", courseId).order("module_number", { ascending: true });
 
 }
+export async function readchaptersbymodule(courseId: string) {
+	await new Promise((resolve) => setTimeout(resolve, 2000));
+	const supabase = await createSupabaseServerClient();
+	return supabase.from("chapters").select("*").eq("module_id", courseId).order("chapterno", { ascending: true });
 
-export async function readchaptersbymodule(module_id: string) {
-	const supabase = await createSupabaseServerClient();
-	return supabase
-		.from("chapters")
-		.select("module_id, chapter_name, slug, id, chapterno")
-		.eq("module_id", module_id)
-		.order("chapterno", { ascending: true });
 }
-export async function readchaptersbymodules(moduleIds: string[]) {
-	const supabase = await createSupabaseServerClient();
-	return supabase
-		.from("chapters")
-		.select("module_id, chapter_name, slug, id, chapterno")
-		.in("module_id", moduleIds)
-		.order("chapterno", { ascending: true });
-}
+
+
 export async function updatemodulebyid(id: number, data: IModule) {
 	await new Promise((resolve) => setTimeout(resolve, 2000));
 	const supabase = await createSupabaseServerClient();

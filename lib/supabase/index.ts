@@ -1,17 +1,18 @@
 "use server";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { Database } from "@/lib/types/supabase";
 import { createClient } from "@supabase/supabase-js";
 
 export async function createSupabaseServerClient() {
-	const cookieStore = cookies();
+	const cookieStorePromise = cookies();
 	return createServerClient<Database>(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 		{
 			cookies: {
-				get(name: string) {
+				async get(name: string) {
+					const cookieStore = await cookieStorePromise;
 					return cookieStore.get(name)?.value;
 				},
 			},
@@ -33,7 +34,7 @@ export async function createSupbaseAdmin() {
 }
 
 export async function fetchCacheSupabase(query: string) {
-	const cookieStore = cookies();
+	const cookieStore = await cookies();
 
 	const authToken = cookieStore.get(
 		"sb-yymdoqdtmbfsrfydgfef-auth-token"

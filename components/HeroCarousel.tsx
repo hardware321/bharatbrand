@@ -102,7 +102,7 @@ const NimaayaHeroSection = () => {
   };
 
   return (
-    <div className="relative h-[75vh] sm:h-[70vh] md:h-[80vh] pt-[45px] lg:h-screen overflow-hidden bg-gray-900">
+    <div className="relative h-[80vh] sm:h-[75vh] md:h-[80vh] pt-[45px] lg:h-screen overflow-hidden bg-gray-900">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
