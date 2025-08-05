@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, Facebook, Instagram, Menu, X, ChevronDown } from 'lucide-react';
+import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar } from 'lucide-react';
+import logo from "../newlogo.png"
+import Image from 'next/image';
 
-const NimaayaNavbar = () => {
+const MegaDiagnosticsNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -11,33 +13,25 @@ const NimaayaNavbar = () => {
     { 
       name: 'About Us', 
       href: '#',
-      dropdown: ['Our Story', 'Mission & Vision', 'Team', 'Awards']
+      dropdown: ['Our Story', 'Our Commitment', 'Our Team', 'Why Trust Us']
     },
     { 
-      name: 'Video Consultation', 
-      href: '#'
-    },
-    { 
-      name: 'Treatments', 
+      name: 'Radiology Services', 
       href: '#',
-      dropdown: ['IVF Treatment', 'Gynecology', 'Fertility Services', 'Maternity Care']
+      dropdown: ['Digital X-Ray', 'CT Scan', 'MRI', 'Ultrasound & Doppler', 'Mammography', 'Echocardiography']
     },
     { 
-      name: 'Our IVF Centers', 
+      name: 'Pathology Services', 
       href: '#',
-      dropdown: ['Surat Center', 'Vadodara Center', 'Ahmedabad Center']
+      dropdown: ['Clinical Pathology', 'Biochemistry', 'Microbiology', 'Immunology & Serology', 'Cytology', 'Histopathology']
     },
     { 
-      name: 'Facilities', 
+      name: 'Interventional Radiology', 
       href: '#',
-      dropdown: ['Laboratory', 'Operation Theatre', 'Recovery Rooms', 'Equipment']
+      dropdown: ['Minimally Invasive Treatments', 'IPD Facilities', 'Emergency Procedures', 'Expert Care']
     },
     { 
       name: 'Contact Us', 
-      href: '#'
-    },
-    { 
-      name: 'IVF Training', 
       href: '#'
     }
   ];
@@ -57,65 +51,61 @@ const NimaayaNavbar = () => {
 
   return (
     <>
+      {/* Gradient Overlay - Only visible when not scrolled */}
+      <div 
+        className={`fixed top-0 left-0 w-full pointer-events-none transition-opacity duration-500 z-40 ${
+          isScrolled ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{
+          height: '20vh',
+          background: 'linear-gradient(180deg, rgba(74, 29, 74, 0.85) 0%, rgba(102, 51, 102, 0.7) 30%, rgba(139, 74, 139, 0.5) 60%, rgba(240, 217, 124, 0.2) 85%, transparent 100%)'
+        }}
+      />
+
       {/* Top Contact Bar - Desktop Only */}
       <div 
-        className="hidden lg:block text-white py-3 px-4 text-sm"
+        className="hidden lg:block text-white py-3 px-4 text-sm relative z-50"
         style={{ 
-          background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)'
+          background: 'linear-gradient(135deg, #4a1d4a 0%, #663366 50%, #8b4a8b 100%)'
         }}
       >
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
           <div className="flex flex-wrap gap-6">
             <span className="flex items-center gap-2 transition-colors cursor-pointer group">
               <Phone size={16} className="animate-pulse group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline group-hover:text-yellow-200 transition-colors">APPOINTMENTS: </span>
-              <span className="group-hover:text-yellow-200 transition-colors">Surat: +91-261-6119900 | Vadodara: +91-265-6839900 | Ahmedabad: +91-7961199900</span>
+              <span className="hidden sm:inline group-hover:text-yellow-300 transition-colors">APPOINTMENTS: </span>
+              <span className="group-hover:text-yellow-300 transition-colors">+91 93514 11126 | +91 90243 11126</span>
+            </span>
+            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+              <Clock size={16} className="group-hover:scale-110 transition-transform" />
+              <span className="group-hover:text-yellow-300 transition-colors">24x7 Available</span>
             </span>
           </div>
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-2 transition-colors cursor-pointer group">
               <Mail size={16} className="group-hover:scale-110 transition-transform" />
-              <span className="group-hover:text-yellow-200 transition-colors">hello@nimaaya.com</span>
+              <span className="group-hover:text-yellow-300 transition-colors">megadiagnosticsudaipur@gmail.com</span>
             </span>
+            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+              <MapPin size={16} className="group-hover:scale-110 transition-transform" />
+              <span className="group-hover:text-yellow-300 transition-colors">Udaipur, Rajasthan</span>
+            </span>
+            
+            {/* Enhanced Book Test Button */}
             <button 
-              className="px-6 py-2 rounded-full text-sm font-semibold transition-all transform hover:scale-105 shadow-lg"
+              className="group relative px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden"
               style={{ 
-                background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)',
-                color: '#443737'
-              }}
-              onMouseEnter={(e) => {
-                const target = e.target as HTMLElement;
-                target.style.background = 'linear-gradient(135deg, #F4E1D2 0%, #E8D5B7 100%)';
-              }}
-              onMouseLeave={(e) => {
-                const target = e.target as HTMLElement;
-                target.style.background = 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)';
+                background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)',
+                color: '#4a1d4a'
               }}
             >
-              Book Appointment
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative flex items-center gap-2">
+                <Calendar size={16} className="group-hover:rotate-12 transition-transform duration-300" />
+                <span>Book Test</span>
+              </div>
+              <div className="absolute inset-0 rounded-full border-2 border-yellow-500 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
             </button>
-            <div className="flex gap-3">
-              <Facebook size={18} className="cursor-pointer transition-all transform hover:scale-110" style={{ color: '#F4E1D2' }} 
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#E8D5B7';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#F4E1D2';
-                }}
-              />
-              <Instagram size={18} className="cursor-pointer transition-all transform hover:scale-110" style={{ color: '#F4E1D2' }}
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#E8D5B7';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#F4E1D2';
-                }}
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -128,78 +118,55 @@ const NimaayaNavbar = () => {
       }`}
       style={{
         background: isScrolled 
-          ? 'rgba(244, 225, 210, 0.95)' 
+          ? 'rgba(255, 255, 255, 0.95)' 
           : 'transparent',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-        borderBottom: isScrolled ? '1px solid rgba(152, 114, 132, 0.2)' : 'none'
+        borderBottom: isScrolled ? '1px solid rgba(74, 29, 74, 0.2)' : 'none'
       }}
       >
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
+          {/* Logo - Fixed and Properly Aligned */}
           <div className="flex items-center group cursor-pointer">
-            <div 
-              className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-xl"
-              style={{
-                background: isScrolled 
-                  ? 'linear-gradient(135deg, #987284 0%, #D5AA9F 50%, #E8D5B7 100%)' 
-                  : 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)'
-              }}
-            >
-              <span 
-                className="text-2xl font-bold transition-colors duration-500"
-                style={{ color: isScrolled ? '#F4E1D2' : '#443737' }}
-              >
-                N
-              </span>
+            <div className=" transition-transform duration-300 group-hover:scale-105">
+              <Image 
+                width={196}
+                height={196}
+                src={logo} 
+                alt="Mega Diagnostics Logo" 
+              />
             </div>
-            <div className="ml-4">
-              <h1 
-                className="text-2xl font-bold transition-all duration-500"
-                style={{ 
-                  color: isScrolled ? '#443737' : '#F4E1D2',
-                  textShadow: isScrolled ? 'none' : '0 2px 4px rgba(68, 55, 55, 0.3)'
-                }}
-              >
-                NIMAAYA
-              </h1>
-              <p 
-                className="text-sm transition-all duration-500"
-                style={{ 
-                  color: isScrolled ? '#987284' : '#E8D5B7',
-                  textShadow: isScrolled ? 'none' : '0 1px 2px rgba(68, 55, 55, 0.2)'
-                }}
-              >
-                women's centre for health
-              </p>
-            </div>
+       
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          {/* Desktop Navigation - Enhanced Font Size */}
+          <div className="hidden lg:flex items-center space-x-2">
             {navItems.map((item) => (
               <div key={item.name} className="relative group">
                 <button
-                  className="flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300"
+                  className="flex items-center gap-2 px-5 py-3 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105"
                   style={{ 
-                    color: isScrolled ? '#443737' : '#F4E1D2',
-                    background: 'transparent'
+                    color: isScrolled ? '#4a1d4a' : '#ffffff',
+                    background: 'transparent',
+                    textShadow: isScrolled ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.3)'
                   }}
                   onClick={() => item.dropdown && handleDropdownToggle(item.name)}
                   onMouseEnter={(e) => {
                     const target = e.target as HTMLElement;
-                    target.style.backgroundColor = isScrolled ? 'rgba(152, 114, 132, 0.1)' : 'rgba(244, 225, 210, 0.1)';
-                    target.style.color = isScrolled ? '#987284' : '#E8D5B7';
+                    target.style.backgroundColor = isScrolled ? 'rgba(102, 51, 102, 0.1)' : 'rgba(240, 217, 124, 0.15)';
+                    target.style.color = isScrolled ? '#663366' : '#e6c76b';
+                    target.style.transform = 'scale(1.05)';
                   }}
                   onMouseLeave={(e) => {
                     const target = e.target as HTMLElement;
                     target.style.backgroundColor = 'transparent';
-                    target.style.color = isScrolled ? '#443737' : '#F4E1D2';
+                    target.style.color = isScrolled ? '#4a1d4a' : '#f0d97c';
+                    target.style.transform = 'scale(1)';
                   }}
                 >
                   {item.name}
                   {item.dropdown && (
                     <ChevronDown 
-                      size={16} 
+                      size={18} 
                       className={`transition-transform duration-300 ${
                         activeDropdown === item.name ? 'rotate-180' : ''
                       }`} 
@@ -210,35 +177,35 @@ const NimaayaNavbar = () => {
                 {/* Dropdown Menu */}
                 {item.dropdown && (
                   <div 
-                    className={`absolute top-full left-0 mt-2 w-56 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${
+                    className={`absolute top-full left-0 mt-2 w-64 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 ${
                       activeDropdown === item.name 
                         ? 'opacity-100 visible transform translate-y-0' 
                         : 'opacity-0 invisible transform -translate-y-2'
                     }`}
                     style={{ 
-                      background: 'rgba(244, 225, 210, 0.98)',
+                      background: 'rgba(248, 250, 252, 0.98)',
                       backdropFilter: 'blur(16px)',
-                      border: '1px solid rgba(152, 114, 132, 0.2)'
+                      border: '1px solid rgba(74, 29, 74, 0.2)'
                     }}
                   >
                     {item.dropdown.map((dropdownItem, index) => (
                       <a
                         key={dropdownItem}
                         href="#"
-                        className="block px-4 py-3 transition-all duration-200"
+                        className="block px-4 py-3 transition-all duration-200 text-sm font-medium hover:transform hover:translate-x-2"
                         style={{ 
-                          color: '#443737',
-                          borderBottom: index < item.dropdown!.length - 1 ? '1px solid rgba(152, 114, 132, 0.1)' : 'none'
+                          color: '#4a1d4a',
+                          borderBottom: index < item.dropdown!.length - 1 ? '1px solid rgba(74, 29, 74, 0.1)' : 'none'
                         }}
                         onMouseEnter={(e) => {
                           const target = e.target as HTMLElement;
-                          target.style.background = 'linear-gradient(135deg, rgba(213, 170, 159, 0.1) 0%, rgba(232, 213, 183, 0.1) 100%)';
-                          target.style.color = '#987284';
+                          target.style.background = 'linear-gradient(135deg, rgba(102, 51, 102, 0.1) 0%, rgba(139, 74, 139, 0.1) 100%)';
+                          target.style.color = '#663366';
                         }}
                         onMouseLeave={(e) => {
                           const target = e.target as HTMLElement;
                           target.style.background = 'transparent';
-                          target.style.color = '#443737';
+                          target.style.color = '#4a1d4a';
                         }}
                       >
                         {dropdownItem}
@@ -248,18 +215,22 @@ const NimaayaNavbar = () => {
                 )}
               </div>
             ))}
+            
+            {/* Desktop Book Appointment Button */}
+      
           </div>
 
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden p-3 rounded-lg transition-all duration-300"
             style={{ 
-              color: isScrolled ? '#443737' : '#F4E1D2'
+              color: isScrolled ? '#4a1d4a' : '#f0d97c',
+              textShadow: isScrolled ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.3)'
             }}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             onMouseEnter={(e) => {
               const target = e.target as HTMLElement;
-              target.style.backgroundColor = isScrolled ? 'rgba(152, 114, 132, 0.1)' : 'rgba(244, 225, 210, 0.1)';
+              target.style.backgroundColor = isScrolled ? 'rgba(74, 29, 74, 0.1)' : 'rgba(240, 217, 124, 0.1)';
             }}
             onMouseLeave={(e) => {
               const target = e.target as HTMLElement;
@@ -292,9 +263,9 @@ const NimaayaNavbar = () => {
           <div 
             className="shadow-xl"
             style={{ 
-              background: 'rgba(244, 225, 210, 0.98)',
+              background: 'rgba(248, 250, 252, 0.98)',
               backdropFilter: 'blur(16px)',
-              borderTop: '1px solid rgba(152, 114, 132, 0.2)'
+              borderTop: '1px solid rgba(74, 29, 74, 0.2)'
             }}
           >
             <div className="px-4 py-4 space-y-2">
@@ -302,22 +273,22 @@ const NimaayaNavbar = () => {
                 <div key={item.name}>
                   <a
                     href={item.href}
-                    className={`flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 ${
+                    className={`flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:translate-x-2 text-base font-semibold ${
                       isMobileMenuOpen ? 'animate-slide-in' : ''
                     }`}
                     style={{ 
-                      color: '#443737',
+                      color: '#4a1d4a',
                       animationDelay: `${index * 50}ms`
                     }}
                     onMouseEnter={(e) => {
                       const target = e.target as HTMLElement;
-                      target.style.background = 'linear-gradient(135deg, rgba(213, 170, 159, 0.1) 0%, rgba(232, 213, 183, 0.1) 100%)';
-                      target.style.color = '#987284';
+                      target.style.background = 'linear-gradient(135deg, rgba(102, 51, 102, 0.1) 0%, rgba(139, 74, 139, 0.1) 100%)';
+                      target.style.color = '#663366';
                     }}
                     onMouseLeave={(e) => {
                       const target = e.target as HTMLElement;
                       target.style.background = 'transparent';
-                      target.style.color = '#443737';
+                      target.style.color = '#4a1d4a';
                     }}
                   >
                     {item.name}
@@ -329,17 +300,17 @@ const NimaayaNavbar = () => {
                         <a
                           key={dropdownItem}
                           href="#"
-                          className="block py-2 px-4 text-sm rounded-lg transition-all duration-200"
-                          style={{ color: '#987284' }}
+                          className="block py-2 px-4 text-sm rounded-lg transition-all duration-200 font-medium"
+                          style={{ color: '#663366' }}
                           onMouseEnter={(e) => {
                             const target = e.target as HTMLElement;
-                            target.style.backgroundColor = 'rgba(213, 170, 159, 0.1)';
-                            target.style.color = '#443737';
+                            target.style.backgroundColor = 'rgba(102, 51, 102, 0.1)';
+                            target.style.color = '#4a1d4a';
                           }}
                           onMouseLeave={(e) => {
                             const target = e.target as HTMLElement;
                             target.style.backgroundColor = 'transparent';
-                            target.style.color = '#987284';
+                            target.style.color = '#663366';
                           }}
                         >
                           {dropdownItem}
@@ -349,6 +320,23 @@ const NimaayaNavbar = () => {
                   )}
                 </div>
               ))}
+              
+              {/* Mobile Book Appointment Button */}
+              <div className="pt-4">
+                <button 
+                  className="group relative w-full px-6 py-3 rounded-full text-base font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #4a1d4a 0%, #663366 100%)',
+                    color: '#f0d97c'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center justify-center gap-2">
+                    <Calendar size={18} className="group-hover:rotate-12 transition-transform duration-300" />
+                    <span>Book Appointment</span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -374,4 +362,4 @@ const NimaayaNavbar = () => {
   );
 };
 
-export default NimaayaNavbar;
+export default MegaDiagnosticsNavbar;

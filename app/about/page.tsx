@@ -1,10 +1,9 @@
 'use client';
-
 import React, { useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import image from '@/public/images/uploads/CXJBuXQLTvTKxUZDrQIgU_photonew.jpg';
+import image from '../../public/logonew.png';
 import { 
   Award, 
   Users, 

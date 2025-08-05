@@ -8,10 +8,16 @@ const NimaayaHeroSection = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Handle window width safely
+  // Handle window width safely and initial load animation
   useEffect(() => {
     setIsMounted(true);
+    
+    // Trigger load animation after component mounts
+    const timer = setTimeout(() => {
+      setHasLoaded(true);
+    }, 100);
     
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -21,12 +27,15 @@ const NimaayaHeroSection = () => {
     handleResize();
     
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
+    };
   }, []);
 
   // Helper function to get responsive values
   const getResponsiveValue = (mobile: number, tablet: number, desktop: number) => {
-    if (!isMounted) return desktop; // Default to desktop during SSR
+    if (!isMounted) return desktop;
     if (windowWidth < 640) return mobile;
     if (windowWidth < 1024) return tablet;
     return desktop;
@@ -35,30 +44,21 @@ const NimaayaHeroSection = () => {
   const slides = [
     {
       id: 1,
-      title: "Health is Happiness",
-      subtitle: "Your journey to wellness starts here with compassionate care",
-      description: "Experience world-class women's healthcare with our team of expert doctors and state-of-the-art facilities.",
-      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-      cta: "Book Consultation",
-      secondary: "Learn More"
+      title: "MEGA Care. MEGA Accuracy.",
+      subtitle: "Advanced Diagnostic and Interventional Radiology Center",
+      description: "Rajasthan's first fully digital, automated diagnostic center with cutting-edge technology and expert radiologists from top institutes of India.",
+      image: "https://plus.unsplash.com/premium_photo-1679288660702-987a6fecf262?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      cta: "Book Diagnostic Test",
+      secondary: "View Services"
     },
     {
       id: 2,
-      title: "Women's Wellness Center",
-      subtitle: "Comprehensive care for every stage of life",
-      description: "From adolescence to menopause, we provide specialized healthcare services tailored to women's unique needs.",
+      title: "Precision You Can See",
+      subtitle: "State of the Art Facilities & 24x7 Availability",
+      description: "From MRI to Interventional Radiology - comprehensive diagnostic services with advanced technology, experienced professionals, and world-class patient care.",
       image: "https://plus.unsplash.com/premium_photo-1723809656722-ba56481bce5d?q=80&w=1121&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      cta: "Explore Services",
-      secondary: "Find Location"
-    },
-    {
-      id: 3,
-      title: "Expert Medical Care",
-      subtitle: "Advanced treatments with compassionate approach",
-      description: "Our fertility specialists and gynecologists use cutting-edge technology to provide the best possible outcomes.",
-      image: "https://plus.unsplash.com/premium_photo-1679288660702-987a6fecf262?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      cta: "Meet Our Experts",
-      secondary: "Success Stories"
+      cta: "Emergency Services",
+      secondary: "Contact Us"
     }
   ];
 
@@ -100,146 +100,111 @@ const NimaayaHeroSection = () => {
     setIsAutoPlay(!isAutoPlay);
   };
 
-  // Get mobile-friendly gradient based on screen size
-  const getMobileGradient = () => {
-    const isMobile = windowWidth < 768;
-    return isMobile 
-      ? `linear-gradient(to bottom, 
-          #44373780 0%, 
-          #98728450 10%, 
-          #D5AA9F30 20%, 
-          rgba(68, 55, 55, 0.4) 100%
-        )`
-      : `linear-gradient(to bottom, 
-          #44373740 0%, 
-          #98728430 5%, 
-          #D5AA9F20 8%, 
-          transparent 10%
-        )`;
-  };
-
   return (
-    <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen overflow-hidden" style={{ background: 'linear-gradient(135deg, #443737 0%, #987284 50%, #D5AA9F 100%)' }}>
+    <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] pt-16 lg:h-screen overflow-hidden bg-gray-900">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-            index === currentSlide 
-              ? 'opacity-100 scale-100' 
-              : 'opacity-0 scale-105'
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            index === currentSlide ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ 
               backgroundImage: `url(${slide.image})`,
-              transform: index === currentSlide ? 'scale(1)' : 'scale(1.1)',
               backgroundSize: 'cover',
               backgroundPosition: 'center center'
             }}
           />
-          {/* Enhanced gradient overlay */}
-          <div 
-            className="absolute top-0 left-0 w-full h-full pointer-events-none"
-            style={{
-              background: isMounted ? getMobileGradient() : `linear-gradient(to bottom, 
-                #44373740 0%, 
-                #98728430 5%, 
-                #D5AA9F20 8%, 
-                transparent 10%
-              )`
-            }}
-          />
+          {/* Dark overlay for text visibility */}
+          <div className="absolute inset-0 bg-black bg-opacity-50" />
         </div>
       ))}
 
-      {/* Content */}
+      {/* Text Content */}
       <div className="relative h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 z-10">
         <div className="max-w-6xl mx-auto text-center">
           {slides.map((slide, index) => (
             <div
               key={slide.id}
-              className={`transition-all duration-800 ease-out ${
+              className={`transition-all duration-500 ease-out ${
                 index === currentSlide
                   ? 'opacity-100 transform translate-y-0'
-                  : 'opacity-0 transform translate-y-8'
+                  : 'opacity-0 transform translate-y-4'
               }`}
               style={{ display: index === currentSlide ? 'block' : 'none' }}
             >
-              {/* Decorative Heart Icon - Responsive sizing */}
-              <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
-                <div className="relative">
-                  <div 
-                    className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center animate-pulse shadow-2xl"
-                    style={{ background: 'linear-gradient(135deg, #D5AA9F 0%, #E8D5B7 50%, #F4E1D2 100%)' }}
-                  >
-                    <Heart size={getResponsiveValue(20, 26, 32)} className="text-white fill-current" style={{ color: '#443737' }} />
-                  </div>
-                  <div className="absolute -inset-2 sm:-inset-3 lg:-inset-4 border-2 rounded-full animate-ping opacity-75" style={{ borderColor: '#E8D5B7' }}></div>
+              {/* Heart Icon */}
+              <div className={`mb-6 flex justify-center transition-all duration-700 ease-out ${
+                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+              }`}>
+                <div 
+                  className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
+                  style={{ background: 'linear-gradient(135deg, #4a1d4a 0%, #8b4a8b 100%)' }}
+                >
+                  <Heart size={24} className="text-white fill-current" />
                 </div>
               </div>
 
-              {/* Main Title - Better mobile typography */}
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 leading-tight px-2">
-                <span 
-                  className="bg-clip-text text-transparent drop-shadow-lg"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 50%, #D5AA9F 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
-                  }}
-                >
-                  {slide.title}
-                </span>
+              {/* Main Title */}
+              <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight transition-all duration-700 ease-out ${
+                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+              }`} style={{ 
+                transitionDelay: '200ms',
+                background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 50%, #f0d97c 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                {slide.title}
               </h1>
               
-              {/* Subtitle - Mobile responsive */}
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-3 sm:mb-4 lg:mb-6 font-light leading-relaxed px-2" style={{ color: '#F4E1D2' }}>
+              {/* Subtitle */}
+              <h2 className={`text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 font-light leading-relaxed text-gray-200 transition-all duration-700 ease-out ${
+                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+              }`} style={{ transitionDelay: '400ms' }}>
                 {slide.subtitle}
               </h2>
               
-              {/* Description - Better mobile readability */}
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 lg:mb-10 max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4" style={{ color: '#E8D5B7' }}>
+              {/* Description */}
+              <p className={`text-sm sm:text-base md:text-lg lg:text-xl mb-8 max-w-3xl mx-auto leading-relaxed text-gray-300 transition-all duration-700 ease-out ${
+                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+              }`} style={{ transitionDelay: '600ms' }}>
                 {slide.description}
               </p>
               
-              {/* CTA Buttons - Mobile stacked layout */}
-              <div className="flex flex-col gap-4 sm:gap-6 justify-center items-center px-4">
+              {/* CTA Buttons */}
+              <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-700 ease-out ${
+                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
+              }`} style={{ transitionDelay: '800ms' }}>
                 <button 
-                  className="group w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-xl min-w-[180px] sm:min-w-[200px]"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)',
-                    color: '#443737'
-                  }}
+                  className="w-full sm:w-auto px-8 py-4 text-white font-semibold rounded-lg transition-all duration-200 min-w-[200px] hover:shadow-lg transform hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #4a1d4a 0%, #8b4a8b 100%)' }}
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    {slide.cta}
-                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full group-hover:animate-bounce" style={{ backgroundColor: '#443737' }}></div>
-                  </span>
+                  {slide.cta}
                 </button>
                 
                 <button 
-                  className="group border-2 w-full sm:w-auto px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 backdrop-blur-sm min-w-[180px] sm:min-w-[200px] hover:bg-white"
+                  className="w-full sm:w-auto px-8 py-4 border-2 font-semibold rounded-lg transition-all duration-200 min-w-[200px] hover:shadow-lg transform hover:scale-105"
                   style={{ 
-                    borderColor: '#E8D5B7',
-                    color: '#F4E1D2'
+                    borderColor: '#f0d97c',
+                    color: '#f0d97c',
+                    background: 'transparent'
                   }}
                   onMouseEnter={(e) => {
                     const target = e.target as HTMLElement;
-                    target.style.backgroundColor = '#F4E1D2';
-                    target.style.color = '#443737';
+                    target.style.background = 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)';
+                    target.style.color = '#4a1d4a';
                   }}
                   onMouseLeave={(e) => {
                     const target = e.target as HTMLElement;
-                    target.style.backgroundColor = 'transparent';
-                    target.style.color = '#F4E1D2';
+                    target.style.background = 'transparent';
+                    target.style.color = '#f0d97c';
                   }}
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    {slide.secondary}
-                    <ChevronRight size={getResponsiveValue(16, 20, 20)} className="group-hover:translate-x-1 transition-transform" />
-                  </span>
+                  {slide.secondary}
                 </button>
               </div>
             </div>
@@ -247,120 +212,109 @@ const NimaayaHeroSection = () => {
         </div>
       </div>
 
-      {/* Navigation Controls - Smaller on mobile */}
-      <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between px-2 sm:px-4 lg:px-6 z-20">
+      {/* Navigation Controls */}
+      <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between px-4 z-20">
         <button
           onClick={prevSlide}
           disabled={isTransitioning}
-          className="group p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
-          style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
+          className="p-3 backdrop-blur-sm rounded-full transition-all duration-200 disabled:opacity-50"
+          style={{ backgroundColor: 'rgba(74, 29, 74, 0.3)' }}
           onMouseEnter={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(212, 170, 159, 0.3)';
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.5)';
           }}
           onMouseLeave={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.3)';
           }}
         >
-          <ChevronLeft size={getResponsiveValue(20, 24, 28)} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronLeft size={24} style={{ color: '#f0d97c' }} />
         </button>
         
         <button
           onClick={nextSlide}
           disabled={isTransitioning}
-          className="group p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-50 backdrop-blur-md"
-          style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
+          className="p-3 backdrop-blur-sm rounded-full transition-all duration-200 disabled:opacity-50"
+          style={{ backgroundColor: 'rgba(74, 29, 74, 0.3)' }}
           onMouseEnter={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(212, 170, 159, 0.3)';
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.5)';
           }}
           onMouseLeave={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(212, 170, 159, 0.2)';
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.3)';
           }}
         >
-          <ChevronRight size={getResponsiveValue(20, 24, 28)} className="transition-colors" style={{ color: '#F4E1D2' }} />
+          <ChevronRight size={24} style={{ color: '#f0d97c' }} />
         </button>
       </div>
 
-      {/* Bottom Controls - Mobile responsive */}
-      <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 sm:gap-4 lg:gap-6 z-20">
-        {/* Slide Indicators - Smaller on mobile */}
-        <div className="flex space-x-2 sm:space-x-3">
+      {/* Bottom Controls */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20">
+        {/* Slide Indicators */}
+        <div className="flex space-x-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`transition-all duration-300 rounded-full ${
+              className={`transition-all duration-200 rounded-full ${
                 index === currentSlide 
-                  ? 'w-8 h-2 sm:w-10 lg:w-12 sm:h-2.5 lg:h-3' 
-                  : 'w-2 h-2 sm:w-2.5 lg:w-3 sm:h-2.5 lg:h-3 hover:scale-125'
+                  ? 'w-8 h-2' 
+                  : 'w-2 h-2 hover:scale-125'
               }`}
               style={{
                 background: index === currentSlide 
-                  ? 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)'
-                  : 'rgba(232, 213, 183, 0.4)'
+                  ? 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)'
+                  : 'rgba(240, 217, 124, 0.4)'
               }}
               onMouseEnter={(e) => {
                 const target = e.target as HTMLElement;
                 if (index !== currentSlide) {
-                  target.style.backgroundColor = 'rgba(232, 213, 183, 0.6)';
+                  target.style.backgroundColor = 'rgba(240, 217, 124, 0.6)';
                 }
               }}
               onMouseLeave={(e) => {
                 const target = e.target as HTMLElement;
                 if (index !== currentSlide) {
-                  target.style.backgroundColor = 'rgba(232, 213, 183, 0.4)';
+                  target.style.backgroundColor = 'rgba(240, 217, 124, 0.4)';
                 }
               }}
             />
           ))}
         </div>
 
-        {/* Auto Play Control - Smaller on mobile */}
+        {/* Auto Play Control */}
         <button
           onClick={toggleAutoPlay}
-          className="p-2 sm:p-2.5 lg:p-3 rounded-full transition-all duration-300 group backdrop-blur-md"
-          style={{ backgroundColor: 'rgba(212, 170, 159, 0.2)' }}
+          className="p-2 backdrop-blur-sm rounded-full transition-all duration-200"
+          style={{ backgroundColor: 'rgba(74, 29, 74, 0.3)' }}
+          onMouseEnter={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.5)';
+          }}
+          onMouseLeave={(e) => {
+            const target = e.target as HTMLElement;
+            target.style.backgroundColor = 'rgba(74, 29, 74, 0.3)';
+          }}
         >
           {isAutoPlay ? (
-            <Pause size={getResponsiveValue(12, 14, 16)} style={{ color: '#F4E1D2' }} />
+            <Pause size={14} style={{ color: '#f0d97c' }} />
           ) : (
-            <Play size={getResponsiveValue(12, 14, 16)} style={{ color: '#F4E1D2' }} />
+            <Play size={14} style={{ color: '#f0d97c' }} />
           )}
         </button>
       </div>
 
       {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 z-20" style={{ backgroundColor: 'rgba(232, 213, 183, 0.2)' }}>
+      <div className="absolute bottom-0 left-0 w-full h-1 z-20" style={{ backgroundColor: 'rgba(240, 217, 124, 0.2)' }}>
         <div 
           className="h-full transition-all duration-300"
           style={{ 
             width: `${((currentSlide + 1) / slides.length) * 100}%`,
-            background: 'linear-gradient(135deg, #E8D5B7 0%, #F4E1D2 100%)'
+            background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)'
           }}
         />
       </div>
-
-      {/* Floating Elements - Fewer on mobile */}
-      {isMounted && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(getResponsiveValue(3, 6, 6))].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full animate-bounce"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
-                backgroundColor: 'rgba(232, 213, 183, 0.3)'
-              }}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
