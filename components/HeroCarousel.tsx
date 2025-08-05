@@ -101,7 +101,7 @@ const NimaayaHeroSection = () => {
   };
 
   return (
-    <div className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] pt-16 lg:h-screen overflow-hidden bg-gray-900">
+    <div className="relative h-[70vh] sm:h-[70vh] md:h-[80vh] pt-[40px] lg:h-screen overflow-hidden bg-gray-900">
       {/* Background Images */}
       {slides.map((slide, index) => (
         <div
@@ -136,17 +136,6 @@ const NimaayaHeroSection = () => {
               }`}
               style={{ display: index === currentSlide ? 'block' : 'none' }}
             >
-              {/* Heart Icon */}
-              <div className={`mb-6 flex justify-center transition-all duration-700 ease-out ${
-                hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'
-              }`}>
-                <div 
-                  className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-                  style={{ background: 'linear-gradient(135deg, #4a1d4a 0%, #8b4a8b 100%)' }}
-                >
-                  <Heart size={24} className="text-white fill-current" />
-                </div>
-              </div>
 
               {/* Main Title */}
               <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight transition-all duration-700 ease-out ${
@@ -212,42 +201,7 @@ const NimaayaHeroSection = () => {
         </div>
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 flex justify-between px-4 z-20">
-        <button
-          onClick={prevSlide}
-          disabled={isTransitioning}
-          className="p-3 backdrop-blur-sm rounded-full transition-all duration-200 disabled:opacity-50"
-          style={{ backgroundColor: 'rgba(74, 29, 74, 0.3)' }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(74, 29, 74, 0.5)';
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(74, 29, 74, 0.3)';
-          }}
-        >
-          <ChevronLeft size={24} style={{ color: '#f0d97c' }} />
-        </button>
-        
-        <button
-          onClick={nextSlide}
-          disabled={isTransitioning}
-          className="p-3 backdrop-blur-sm rounded-full transition-all duration-200 disabled:opacity-50"
-          style={{ backgroundColor: 'rgba(74, 29, 74, 0.3)' }}
-          onMouseEnter={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(74, 29, 74, 0.5)';
-          }}
-          onMouseLeave={(e) => {
-            const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'rgba(74, 29, 74, 0.3)';
-          }}
-        >
-          <ChevronRight size={24} style={{ color: '#f0d97c' }} />
-        </button>
-      </div>
+
 
       {/* Bottom Controls */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20">

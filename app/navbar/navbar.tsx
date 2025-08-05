@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar } from 'lucide-react';
 import logo from "../newlogo.png"
 import Image from 'next/image';
-
+import Link from 'next/link';
 const MegaDiagnosticsNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -92,6 +92,7 @@ const MegaDiagnosticsNavbar = () => {
             </span>
             
             {/* Enhanced Book Test Button */}
+            <Link href="/Book"> 
             <button 
               className="group relative px-8 py-2.5 rounded-full text-sm font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden"
               style={{ 
@@ -100,12 +101,15 @@ const MegaDiagnosticsNavbar = () => {
               }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative flex items-center gap-2">
+
+                 <div className="relative flex items-center gap-2">
                 <Calendar size={16} className="group-hover:rotate-12 transition-transform duration-300" />
                 <span>Book Test</span>
               </div>
+            
               <div className="absolute inset-0 rounded-full border-2 border-yellow-500 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
             </button>
+              </Link>
           </div>
         </div>
       </div>

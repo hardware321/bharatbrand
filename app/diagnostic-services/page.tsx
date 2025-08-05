@@ -1,7 +1,5 @@
 'use client';
-
 import React, { useState, useEffect, ReactNode, ButtonHTMLAttributes } from 'react';
-import Image from 'next/image';
 import { 
   Microscope, 
   FlaskConical, 
@@ -11,7 +9,13 @@ import {
   Home,
   CheckCircle,
   Clock,
-  Award
+  Award,
+  Activity,
+  Scan,
+  Brain,
+  Stethoscope,
+  Users,
+  Star
 } from 'lucide-react';
 
 // TypeScript interfaces
@@ -19,7 +23,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   className?: string;
   size?: 'default' | 'lg';
-  variant?: 'default' | 'outline';
+  variant?: 'default' | 'outline' | 'golden';
 }
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -47,12 +51,19 @@ interface Service {
   title: string;
   description: string;
   tests: string[];
+  category: string;
 }
 
 interface QualityFeature {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
+}
+
+interface Doctor {
+  name: string;
+  qualifications: string;
+  specialty: string;
 }
 
 // Component definitions
@@ -63,14 +74,15 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'default', 
   ...props 
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background transform hover:scale-105';
+  const baseClasses = 'inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background transform hover:scale-105 shadow-lg hover:shadow-xl';
   const sizeClasses = {
-    default: 'h-10 py-2 px-4',
-    lg: 'h-12 px-8 text-lg'
+    default: 'h-12 py-3 px-6',
+    lg: 'h-14 px-8 text-lg'
   };
   const variantClasses = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl',
-    outline: 'border border-current bg-transparent hover:bg-current hover:text-background'
+    default: 'bg-gradient-to-r from-purple-700 to-purple-900 text-white hover:from-purple-800 hover:to-purple-950',
+    outline: 'border-2 border-purple-700 bg-transparent text-purple-700 hover:bg-purple-700 hover:text-white',
+    golden: 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 hover:from-yellow-500 hover:to-yellow-600 font-bold'
   };
   
   return (
@@ -84,7 +96,7 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => (
-  <div className={`rounded-lg border bg-white shadow-sm hover:shadow-lg transition-all duration-300 ${className}`} {...props}>
+  <div className={`rounded-2xl border border-purple-100 bg-white shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${className}`} {...props}>
     {children}
   </div>
 );
@@ -102,12 +114,12 @@ const CardHeader: React.FC<CardHeaderProps> = ({ children, className = '', ...pr
 );
 
 const CardTitle: React.FC<CardTitleProps> = ({ children, className = '', ...props }) => (
-  <h3 className={`text-2xl font-semibold leading-none tracking-tight ${className}`} {...props}>
+  <h3 className={`text-xl font-bold leading-none tracking-tight text-purple-900 ${className}`} {...props}>
     {children}
   </h3>
 );
 
-const Page: React.FC = () => {
+const MegaDiagnostics: React.FC = () => {
   const [isVisible, setIsVisible] = useState<Record<string, boolean>>({});
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
@@ -134,188 +146,284 @@ const Page: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  const services: Service[] = [
+  const radiologyServices: Service[] = [
+    {
+      icon: Scan,
+      title: 'Digital X-Ray',
+      description: 'Fast, high-resolution digital scans with instant results',
+      tests: ['Chest X-Ray', 'Bone X-Ray', 'Joint X-Ray', 'Spine X-Ray'],
+      category: 'imaging'
+    },
+    {
+      icon: Heart,
+      title: 'CT Scan',
+      description: 'Multi-slice CT-Scan for all body parts with specialized protocols',
+      tests: ['CT Angiographies', 'Triple-phase CT (Liver)', 'CT-Adrenal protocol', 'Enteroclysis'],
+      category: 'imaging'
+    },
+    {
+      icon: Brain,
+      title: 'MRI',
+      description: '3D Digital Silent MRI for brain, spine, joint, and abdominal scans',
+      tests: ['Brain MRI', 'Spine MRI', 'Joint MRI', 'Abdominal MRI'],
+      category: 'imaging'
+    },
+    {
+      icon: Heart,
+      title: 'Ultrasound & Doppler',
+      description: '2D, 3D, 4D scans for all organs with advanced Doppler studies',
+      tests: ['Abdominal USG', 'Pelvic USG', 'Doppler Studies', 'Echocardiography'],
+      category: 'imaging'
+    },
+    {
+      icon: Activity,
+      title: 'Antenatal Services',
+      description: 'Comprehensive fetal scans including 3D, 4D, and anomaly scans',
+      tests: ['3D/4D Scans', 'Anomaly Scan', 'Fetal Echo', 'NBNT'],
+      category: 'imaging'
+    },
+    {
+      icon: Heart,
+      title: 'Mammography',
+      description: 'Advanced breast imaging and cancer screening',
+      tests: ['Digital Mammography', 'Breast Cancer Screening', 'Tomosynthesis'],
+      category: 'imaging'
+    }
+  ];
+
+  const pathologyServices: Service[] = [
     {
       icon: FlaskConical,
       title: 'Clinical Biochemistry',
-      description: 'Comprehensive blood chemistry analysis including glucose, lipids, liver function, kidney function, and cardiac markers.',
-      tests: ['Blood Glucose', 'Lipid Profile', 'Liver Function Test', 'Kidney Function Test', 'Cardiac Markers', 'HbA1c', 'Electrolytes']
+      description: 'Comprehensive blood chemistry analysis with 5-part hematology',
+      tests: ['Liver Profile', 'Kidney Profile', 'Lipid Profile', 'Thyroid Profile'],
+      category: 'pathology'
     },
     {
       icon: Shield,
       title: 'Immunology & Serology',
-      description: 'Advanced testing for infectious diseases, autoimmune conditions, and hormone levels.',
-      tests: ['HIV/HBsAg Testing', 'Thyroid Function', 'Autoimmune Markers', 'Allergy Testing', 'Tumor Markers', 'Hormone Analysis']
+      description: 'Advanced testing for infections and immune system disorders',
+      tests: ['Dengue Testing', 'HIV Testing', 'Hepatitis Panel', 'COVID Testing'],
+      category: 'pathology'
     },
     {
       icon: Microscope,
       title: 'Histopathology',
-      description: 'Detailed tissue examination for cancer diagnosis and other pathological conditions.',
-      tests: ['Biopsy Examination', 'Cancer Screening', 'FNAC', 'Frozen Section', 'Special Stains', 'IHC Studies']
-    },
-    {
-      icon: Microscope,
-      title: 'Cytology',
-      description: 'Cell-based diagnostic testing including Pap smears and fine needle aspirations.',
-      tests: ['Pap Smear', 'FNAC', 'Pleural Fluid', 'Ascitic Fluid', 'CSF Analysis', 'Cervical Screening']
-    },
-    {
-      icon: FlaskConical,
-      title: 'Microbiology',
-      description: 'Identification of bacterial, viral, and fungal infections with antibiotic sensitivity.',
-      tests: ['Culture & Sensitivity', 'TB Testing', 'Viral Load', 'Antigen Detection', 'PCR Testing', 'Blood Culture']
-    },
-    {
-      icon: Shield,
-      title: 'IFA (Immunofluorescence Assays)',
-      description: 'Specialized testing using fluorescent markers for precise diagnosis.',
-      tests: ['ANA Testing', 'Anti-dsDNA', 'ANCA', 'Direct IF', 'Indirect IF', 'Autoimmune Panel']
-    },
-    {
-      icon: Heart,
-      title: 'Hematology',
-      description: 'Complete blood analysis including cell counts, blood disorders, and blood typing.',
-      tests: ['CBC with ESR', 'Peripheral Smear', 'Blood Grouping', 'Reticulocyte Count', 'Bone Marrow', 'Flow Cytometry']
-    },
-    {
-      icon: FlaskConical,
-      title: 'Coagulation Studies',
-      description: 'Blood clotting assessment for bleeding disorders and pre-surgical evaluation.',
-      tests: ['PT/INR', 'APTT', 'Bleeding Time', 'Clotting Time', 'D-Dimer', 'Factor Analysis']
+      description: 'In-house tissue evaluation with tumor markers',
+      tests: ['Biopsy Examination', 'Cancer Screening', 'Tumor Markers', 'Special Stains'],
+      category: 'pathology'
     },
     {
       icon: Dna,
-      title: 'Molecular Biology',
-      description: 'DNA/RNA based testing for genetic disorders and infectious diseases.',
-      tests: ['PCR Testing', 'Genetic Analysis', 'Viral Load', 'Mutation Analysis', 'Pharmacogenomics', 'NGS Studies']
+      title: 'Cytology',
+      description: 'Cell-based diagnostic testing including FNACs and Pap smears',
+      tests: ['FNAC', 'Pap Smear', 'Body Fluids', 'Cervical Screening'],
+      category: 'pathology'
+    },
+    {
+      icon: Activity,
+      title: 'Microbiology',
+      description: 'Cultures, sensitivity testing, and infection diagnosis',
+      tests: ['Culture & Sensitivity', 'Blood Culture', 'Urine Culture', 'TB Testing'],
+      category: 'pathology'
+    },
+    {
+      icon: FlaskConical,
+      title: 'Clinical Pathology',
+      description: 'Routine analysis of urine, stool, and body fluids',
+      tests: ['Urine Analysis', 'Stool Examination', 'Body Fluid Analysis', 'Semen Analysis'],
+      category: 'pathology'
+    }
+  ];
+
+  const interventionalServices: Service[] = [
+    {
+      icon: Stethoscope,
+      title: 'Minimally Invasive Procedures',
+      description: 'Advanced treatments under real-time image guidance',
+      tests: ['Angioplasty', 'Stent Placement', 'Embolization', 'Biopsy Procedures'],
+      category: 'interventional'
     }
   ];
 
   const qualityFeatures: QualityFeature[] = [
     {
       icon: Award,
-      title: 'NABL & CAP Accredited',
-      description: 'All specialized tests processed through nationally and internationally accredited laboratories.'
+      title: 'Advanced Technology',
+      description: 'Cutting-edge equipment and state of the art facilities for accurate diagnosis.'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Appropriate Results',
+      description: 'Precise and reliable diagnostic results with expert interpretation.'
     },
     {
       icon: Clock,
-      title: 'Quick Turnaround',
-      description: 'Fast and reliable results with same-day reporting for urgent tests.'
+      title: '24 x 7 Availability',
+      description: 'Round-the-clock services for emergency and routine diagnostic needs.'
+    },
+    {
+      icon: Star,
+      title: 'World Class Services',
+      description: 'International standards of healthcare delivery and patient care.'
+    },
+    {
+      icon: Users,
+      title: 'Care for Everyone',
+      description: 'Comprehensive healthcare solutions for patients of all ages and conditions.'
     },
     {
       icon: Home,
-      title: 'Home Collection',
-      description: 'Convenient sample collection from your home with trained phlebotomists.'
-    },
-    {
-      icon: Shield,
-      title: 'Quality Assurance',
-      description: 'Stringent quality control measures ensuring accurate and reliable results.'
+      title: 'Digital Reports',
+      description: 'Digital reports accessible from anywhere, anytime for your convenience.'
     }
   ];
 
-  const processSteps = [
+  const doctors: Doctor[] = [
     {
-      step: 1,
-      title: 'Book Your Test',
-      description: 'Schedule online or call us for appointment'
+      name: 'Dr. Bharat Gupta',
+      qualifications: 'MD, DNB, PDCC (SGPGI, Lucknow)',
+      specialty: 'Consultant Intervention Radiologist'
     },
     {
-      step: 2,
-      title: 'Sample Collection',
-      description: 'Visit our center or opt for home collection'
+      name: 'Dr. Bharat Jain',
+      qualifications: 'MD Radiodiagnosis, Fellowship in Fetal Medicine',
+      specialty: 'Consultant Radiologist'
     },
     {
-      step: 3,
-      title: 'Processing & Analysis',
-      description: 'Samples processed in accredited laboratories'
+      name: 'Dr. Pranveer Singh Rao',
+      qualifications: 'MD Pathology',
+      specialty: 'Consultant Pathologist'
     },
     {
-      step: 4,
-      title: 'Get Results',
-      description: 'Receive detailed reports with expert interpretation'
+      name: 'Dr. Hitesh Sharma',
+      qualifications: 'MD',
+      specialty: 'Consultant Radiologist'
     }
+  ];
+
+  const healthPackages = [
+    'Routine health checkups',
+    'Specialized profiles for diabetes, thyroid, fertility, cancer',
+    'Pre-surgical panels',
+    'Pediatric, geriatric and women\'s wellness testing'
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-32 right-32 w-48 h-48 bg-white/5 rounded-full blur-2xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/15 rounded-full blur-lg animate-pulse delay-500"></div>
-        </div>
-        
-        <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center transition-all duration-1000 ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6">Diagnostic Services</h1>
-          <p className={`text-lg sm:text-xl max-w-3xl mx-auto mb-8 text-blue-100 transition-all duration-1000 delay-300 ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            Full spectrum pathology services powered by top-tier lab networks, 
-            ensuring accurate diagnosis and quality healthcare for Southern Rajasthan.
-          </p>
-          <div className={`transition-all duration-1000 delay-500 ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <Button size="lg" className="bg-blue text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4">
-              Book Test Now
-            </Button>
+ 
+
+      {/* About Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div 
+              id="about-content"
+              data-animate
+              className={`transition-all duration-1000 ${
+                isVisible['about-content'] 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 -translate-x-8'
+              }`}
+            >
+              <h2 className="text-4xl font-bold mb-6 text-purple-900">
+                Rajasthan's First <span className="text-yellow-500">Advanced Diagnostic Center</span>
+              </h2>
+              <p className="text-lg text-gray-700 mb-6">
+                At Mega Interventions & Diagnostics, we combine cutting-edge medical technology with compassionate care to offer comprehensive diagnostic and interventional services under one roof.
+              </p>
+              <p className="text-lg text-gray-700 mb-8">
+                With a team of highly qualified radiologists, pathologists, and technologists from top institutes of India, we deliver accurate results with a focus on early detection, precision, and patient safety.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-purple-50 rounded-xl">
+                  <div className="text-3xl font-bold text-purple-700">First</div>
+                  <div className="text-sm text-purple-600">IR Services in South Rajasthan</div>
+                </div>
+                <div className="text-center p-4 bg-yellow-50 rounded-xl">
+                  <div className="text-3xl font-bold text-yellow-600">24/7</div>
+                  <div className="text-sm text-yellow-700">Emergency Services</div>
+                </div>
+              </div>
+            </div>
+            <div 
+              id="about-image"
+              data-animate
+              className={`relative transition-all duration-1000 ${
+                isVisible['about-image'] 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-8'
+              }`}
+            >
+              <div className="relative h-96 bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-transparent"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <Microscope className="h-24 w-24 mx-auto mb-4" />
+                    <p className="text-xl font-bold">State of the Art Facilities</p>
+                    <p className="text-purple-200">Advanced Technology & Expert Care</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
+
+
+      {/* Pathology Services
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
-            id="services-header"
+            id="pathology-header"
             data-animate
             className={`text-center mb-16 transition-all duration-1000 ${
-              isVisible['services-header'] 
+              isVisible['pathology-header'] 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
             }`}
           >
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Our Testing Services</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive diagnostic testing with state-of-the-art equipment and 
-              expert interpretation for accurate medical diagnosis.
+            <h2 className="text-4xl font-bold mb-4 text-purple-900">Pathology Services</h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Rajasthan's first fully digital, automated, and barcoded diagnostic laboratory ensuring speed, accuracy, and reliability.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {pathologyServices.map((service, index) => (
               <Card 
                 key={index}
-                id={`service-${index}`}
+                id={`pathology-${index}`}
                 data-animate
-                className={`hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${
-                  isVisible[`service-${index}`] 
+                className={`hover:shadow-2xl transition-all duration-500 ${
+                  isVisible[`pathology-${index}`] 
                     ? 'opacity-100 translate-y-0' 
                     : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <CardHeader>
-                  <div className="bg-blue-600 text-white p-3 rounded-lg w-fit mb-4 transform transition-transform duration-300 hover:rotate-12">
+                  <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 p-3 rounded-xl w-fit mb-4 transform transition-transform duration-300 hover:scale-110">
                     <service.icon className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-xl text-gray-800">{service.title}</CardTitle>
+                  <CardTitle>{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 mb-4">{service.description}</p>
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-gray-800 text-sm">Common Tests:</h4>
+                    <h4 className="font-semibold text-purple-800 text-sm">Key Tests:</h4>
                     <ul className="space-y-1">
                       {service.tests.slice(0, 3).map((test, testIndex) => (
                         <li key={testIndex} className="flex items-center text-sm text-gray-600">
-                          <CheckCircle className="h-3 w-3 text-blue-600 mr-2 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-purple-600 mr-2 flex-shrink-0" />
                           {test}
                         </li>
                       ))}
                       {service.tests.length > 3 && (
-                        <li className="text-sm text-blue-600 font-medium">
-                          +{service.tests.length - 3} more tests available
+                        <li className="text-sm text-yellow-600 font-medium">
+                          +{service.tests.length - 3} more tests
                         </li>
                       )}
                     </ul>
@@ -325,10 +433,12 @@ const Page: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+
+
 
       {/* Quality Features */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 bg-gradient-to-br from-yellow-50 to-yellow-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
             id="quality-header"
@@ -339,19 +449,19 @@ const Page: React.FC = () => {
                 : 'opacity-0 translate-y-8'
             }`}
           >
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Quality You Can Trust</h2>
-            <p className="text-xl text-gray-600">
-              All advanced and specialized tests are processed through NABL/CAP-accredited laboratories.
+            <h2 className="text-4xl font-bold mb-4 text-purple-900">Why Patients Trust Us</h2>
+            <p className="text-xl text-gray-700">
+              Committed to providing exceptional patient care with world-class standards.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {qualityFeatures.map((feature, index) => (
               <Card 
                 key={index}
                 id={`quality-${index}`}
                 data-animate
-                className={`text-center p-6 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${
+                className={`text-center p-6 hover:shadow-2xl transition-all duration-500 bg-white ${
                   isVisible[`quality-${index}`] 
                     ? 'opacity-100 translate-y-0' 
                     : 'opacity-0 translate-y-8'
@@ -359,100 +469,145 @@ const Page: React.FC = () => {
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <CardContent className="p-6">
-                  <div className="bg-blue-600 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center transform transition-transform duration-300 hover:rotate-12">
+                  <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center transform transition-transform duration-300 hover:scale-110">
                     <feature.icon className="h-8 w-8" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-800">{feature.title}</h3>
+                  <h3 className="text-lg font-bold mb-2 text-purple-900">{feature.title}</h3>
                   <p className="text-gray-600 text-sm">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Process Section */}
-      <section className="py-20 bg-white">
+      {/* Doctors Section */}
+      {/* <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div 
-              id="process-content"
-              data-animate
-              className={`transition-all duration-1000 ${
-                isVisible['process-content'] 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 -translate-x-8'
-              }`}
-            >
-              <h2 className="text-4xl font-bold mb-6 text-gray-800">
-                Simple <span className="text-blue-600">Process</span>
-              </h2>
-              <div className="space-y-6">
-                {processSteps.map((step, index) => (
-                  <div 
-                    key={index}
-                    className={`flex items-start space-x-4 transition-all duration-500 ${
-                      isVisible['process-content'] 
-                        ? 'opacity-100 translate-x-0' 
-                        : 'opacity-0 translate-x-4'
-                    }`}
-                    style={{ transitionDelay: `${(index + 2) * 100}ms` }}
-                  >
-                    <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold flex-shrink-0">
-                      {step.step}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-800">{step.title}</h3>
-                      <p className="text-gray-600">{step.description}</p>
-                    </div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-purple-900">Our Expert Team</h2>
+            <p className="text-xl text-gray-700">Group of Doctors from Top Institutes of India</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {doctors.map((doctor, index) => (
+              <Card 
+                key={index}
+                className="text-center p-6 hover:shadow-2xl transition-all duration-500"
+              >
+                <CardContent className="p-6">
+                  <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <Users className="h-8 w-8" />
                   </div>
-                ))}
+                  <h3 className="text-lg font-bold mb-2 text-purple-900">{doctor.name}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{doctor.qualifications}</p>
+                  <p className="text-sm text-purple-700 font-medium">{doctor.specialty}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
+      {/* Health Packages */}
+      {/* <section className="py-20 bg-gradient-to-r from-purple-50 to-purple-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-purple-900">Health Packages</h2>
+            <p className="text-xl text-gray-700">Comprehensive health checkups tailored for everyone</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {healthPackages.map((packageName, index) => (
+              <div 
+                key={index}
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 p-3 rounded-lg">
+                    <CheckCircle className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-purple-900">{packageName}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
+      {/* Contact CTA */}
+      {/* <section className="py-20 bg-gradient-to-r from-purple-900 via-purple-800 to-purple-700 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-transparent"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold mb-6">Need Medical Assistance?</h2>
+              <p className="text-xl mb-8 text-purple-200">
+                Book your test today and experience the MEGA difference with Rajasthan's most trusted diagnostic center.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" variant="golden" className="font-bold px-8">
+                  Book Test Online
+                </Button>
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-purple-900">
+                  Emergency Services
+                </Button>
               </div>
             </div>
-            <div 
-              id="process-image"
-              data-animate
-              className={`relative transition-all duration-1000 ${
-                isVisible['process-image'] 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 translate-x-8'
-              }`}
-            >
-              <div className="relative h-96 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg shadow-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-blue-800/20"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-blue-800">
-                    <Microscope className="h-24 w-24 mx-auto mb-4" />
-                    <p className="text-lg font-semibold">Modern Laboratory</p>
-                    <p className="text-sm">State-of-the-art equipment</p>
+            
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl">
+              <h3 className="text-2xl font-bold mb-6 text-yellow-400">Contact Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-yellow-400 text-purple-900 p-2 rounded-lg">
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold">+91 93514 11126</p>
+                    <p className="text-purple-200">+91 90243 11126</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <div className="bg-yellow-400 text-purple-900 p-2 rounded-lg">
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                  </div>
+                  <p className="font-semibold">megadiagnosticsudaipur@gmail.com</p>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <div className="bg-yellow-400 text-purple-900 p-2 rounded-lg">
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Plot No.29-C, Madhuban</p>
+                    <p className="text-purple-200">Behind Lok Kala Mandal</p>
+                    <p className="text-purple-200">Udaipur - 313001, Rajasthan</p>
                   </div>
                 </div>
               </div>
+              
+              <div className="mt-8 pt-6 border-t border-white/20">
+                <p className="text-center text-purple-200 text-sm">
+                  <span className="text-yellow-400 font-semibold">Special Note:</span> MRI services in collaboration with Star Imaging
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">Need a Diagnostic Test?</h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Book your test today and get accurate results from Rajasthan's most trusted diagnostic center.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-blue text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4">
-              Book Test Online
-            </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-4">
-              Request Home Collection
-            </Button>
-          </div>
-        </div>
-      </section>
+   
     </div>
   );
 };
 
-export default Page;
+export default MegaDiagnostics;
