@@ -320,10 +320,10 @@ function MedicalServices() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tab Navigation */}
         <div className="flex justify-center mb-12">
-          <div className="bg-white rounded-2xl p-2 shadow-xl border-2" style={{ borderColor: 'rgba(139, 74, 139, 0.2)' }}>
+          <div className="bg-white grid grid-flow-row md:grid-cols-2 grid-cols-1    rounded-2xl p-2 shadow-xl border-2" style={{ borderColor: 'rgba(139, 74, 139, 0.2)' }}>
             <button
               onClick={() => setActiveTab('pathology')}
-              className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+              className={`px-8 mx-2 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center ${
                 activeTab === 'pathology'
                   ? 'text-white shadow-lg transform scale-105'
                   : 'hover:scale-105'

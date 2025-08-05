@@ -179,7 +179,7 @@ const NimaayaHeroSection = () => {
                   </Link>
                 
                 <button 
-                  className="w-full sm:w-auto px-8 py-4 border-2 font-semibold rounded-lg transition-all duration-200 min-w-[200px] hover:shadow-lg transform hover:scale-105"
+                  className=" sm:w-auto px-20 py-2 border-2 font-semibold rounded-lg transition-all duration-200 min-w-[150px] hover:shadow-lg transform hover:scale-105"
                   style={{ 
                     borderColor: '#f0d97c',
                     color: '#f0d97c',

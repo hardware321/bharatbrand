@@ -3,21 +3,11 @@ import { createSupabaseServerClient } from "@/lib/supabase";
 import { IBlog, IModule } from "@/lib/types";
 import { revalidatePath  } from "next/cache";
 import { BlogFormSchemaType } from "@/lib/schema";
-
-
-
 const DASHBOARD = "/dashboard/blog";
-
-
 export async function createEmail(data: {
 	email: string;
 	created_at: string;
-
 }) {
-
-
-	// returning data 
-
 	const supabase = await createSupabaseServerClient();
 	const emailresult = await supabase
 		.from("emaildata")

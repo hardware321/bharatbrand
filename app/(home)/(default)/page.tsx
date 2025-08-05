@@ -10,8 +10,8 @@ export default function Page() {
       <NimaayaNavbar />
       <HeroCarousel />
       <DiagnosticService />
-      <IntervantionalRadiology />
       <Radiologyservices />
+      <IntervantionalRadiology />
     </div>
  
   );
