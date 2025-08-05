@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { 
   Calendar,
@@ -264,17 +265,7 @@ const BookTestPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100">
       <MegaDiagnosticsNavbar />
       
-      {/* Header Section */}
-      <section className="py-12 bg-gradient-to-r from-purple-900 to-purple-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Book Your <span className="text-yellow-400">Test</span>
-          </h1>
-          <p className="text-xl text-purple-200 max-w-2xl mx-auto">
-            Schedule your diagnostic test with Rajasthan's most trusted healthcare center
-          </p>
-        </div>
-      </section>
+
 
       {/* Booking Form */}
       <section className="py-16">

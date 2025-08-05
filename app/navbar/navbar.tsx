@@ -27,7 +27,7 @@ const MegaDiagnosticsNavbar = () => {
     },
     { 
       name: 'Interventional Radiology', 
-      href: '#',
+      href: '#Minimally-Invasive-Treatments',
       dropdown: ['Minimally Invasive Treatments', 'IPD Facilities', 'Emergency Procedures', 'Expert Care']
     },
     { 
@@ -168,14 +168,17 @@ const MegaDiagnosticsNavbar = () => {
                   }}
                 >
                   {item.name}
+                <a href={item.href}>
+
                   {item.dropdown && (
                     <ChevronDown 
-                      size={18} 
-                      className={`transition-transform duration-300 ${
-                        activeDropdown === item.name ? 'rotate-180' : ''
+                    size={18} 
+                    className={`transition-transform duration-300 ${
+                      activeDropdown === item.name ? 'rotate-180' : ''
                       }`} 
-                    />
-                  )}
+                      />
+                    )}
+                    </a>
                 </button>
                 
                 {/* Dropdown Menu */}
@@ -195,7 +198,7 @@ const MegaDiagnosticsNavbar = () => {
                     {item.dropdown.map((dropdownItem, index) => (
                       <a
                         key={dropdownItem}
-                        href="#"
+                        href={item.href}
                         className="block px-4 py-3 transition-all duration-200 text-sm font-medium hover:transform hover:translate-x-2"
                         style={{ 
                           color: '#4a1d4a',

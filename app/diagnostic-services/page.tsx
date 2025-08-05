@@ -373,67 +373,7 @@ const MegaDiagnostics: React.FC = () => {
 
 
 
-      {/* Pathology Services
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div 
-            id="pathology-header"
-            data-animate
-            className={`text-center mb-16 transition-all duration-1000 ${
-              isVisible['pathology-header'] 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h2 className="text-4xl font-bold mb-4 text-purple-900">Pathology Services</h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Rajasthan's first fully digital, automated, and barcoded diagnostic laboratory ensuring speed, accuracy, and reliability.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pathologyServices.map((service, index) => (
-              <Card 
-                key={index}
-                id={`pathology-${index}`}
-                data-animate
-                className={`hover:shadow-2xl transition-all duration-500 ${
-                  isVisible[`pathology-${index}`] 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-8'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <CardHeader>
-                  <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 p-3 rounded-xl w-fit mb-4 transform transition-transform duration-300 hover:scale-110">
-                    <service.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle>{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-purple-800 text-sm">Key Tests:</h4>
-                    <ul className="space-y-1">
-                      {service.tests.slice(0, 3).map((test, testIndex) => (
-                        <li key={testIndex} className="flex items-center text-sm text-gray-600">
-                          <CheckCircle className="h-3 w-3 text-purple-600 mr-2 flex-shrink-0" />
-                          {test}
-                        </li>
-                      ))}
-                      {service.tests.length > 3 && (
-                        <li className="text-sm text-yellow-600 font-medium">
-                          +{service.tests.length - 3} more tests
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section> */}
+   
 
 
 
@@ -509,31 +449,7 @@ const MegaDiagnostics: React.FC = () => {
         </div>
       </section> */}
 
-      {/* Health Packages */}
-      {/* <section className="py-20 bg-gradient-to-r from-purple-50 to-purple-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-purple-900">Health Packages</h2>
-            <p className="text-xl text-gray-700">Comprehensive health checkups tailored for everyone</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {healthPackages.map((packageName, index) => (
-              <div 
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-purple-900 p-3 rounded-lg">
-                    <CheckCircle className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-purple-900">{packageName}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
+    
 
       {/* Contact CTA */}
       {/* <section className="py-20 bg-gradient-to-r from-purple-900 via-purple-800 to-purple-700 text-white relative overflow-hidden">

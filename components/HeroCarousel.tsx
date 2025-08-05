@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Heart } from 'lucide-react';
+import {  Play, Pause } from 'lucide-react';
 
 const NimaayaHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
