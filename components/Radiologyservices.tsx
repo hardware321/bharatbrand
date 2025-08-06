@@ -289,13 +289,6 @@ function MedicalServices() {
                 Book Test Now
               </button>
                   </Link>
-              <button 
-                className="px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg border-2 flex items-center justify-center"
-                style={{ borderColor: '#8b4a8b', color: '#4a1d4a' }}
-              >
-                <Download className="h-5 w-5 mr-2" />
-                Download Reports
-              </button>
             </div>
           </div>
 
