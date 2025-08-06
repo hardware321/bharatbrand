@@ -102,7 +102,7 @@ const InterventionalRadiology = () => {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8f4ff 0%, #ede4ff 100%)' }}>
+    <div id='Minimally-Invasive-Treatments' className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8f4ff 0%, #ede4ff 100%)' }}>
       {/* Hero Section */}
       <section className="pt-20 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">

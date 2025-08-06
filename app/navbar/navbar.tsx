@@ -11,11 +11,7 @@ const MegaDiagnosticsNavbar = () => {
   const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
 
   const navItems = [
-    { 
-      name: 'About Us', 
-      href: 'about',
-      dropdown: ['Our Story', 'Our Commitment', 'Our Team', 'Why Trust Us']
-    },
+  
     { 
       name: 'Radiology Services', 
       href: '#radiology',
@@ -31,9 +27,14 @@ const MegaDiagnosticsNavbar = () => {
       href: '#Minimally-Invasive-Treatments',
       dropdown: ['Minimally Invasive Treatments', 'IPD Facilities', 'Emergency Procedures', 'Expert Care']
     },
+      { 
+      name: 'About Us', 
+      href: 'about',
+      // dropdown: ['Our Story', 'Our Commitment', 'Our Team', 'Why Trust Us']
+    },
     { 
       name: 'Contact Us', 
-      href: '#'
+      href: 'Book'
     }
   ];
 
@@ -76,7 +77,17 @@ const MegaDiagnosticsNavbar = () => {
       >
         <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
           <div className="flex flex-wrap gap-6">
-            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+            <span
+              className="flex items-center gap-2 transition-colors cursor-pointer group"
+              onClick={() => window.open('https://wa.me/919351411126', '_blank')}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                window.open('https://wa.me/919351411126', '_blank');
+              }
+              }}
+            >
               <Phone size={16} className="animate-pulse group-hover:scale-110 transition-transform" />
               <span className="hidden sm:inline group-hover:text-yellow-300 transition-colors">APPOINTMENTS: </span>
               <span className="group-hover:text-yellow-300 transition-colors">+91 93514 11126 | +91 90243 11126</span>
@@ -87,10 +98,14 @@ const MegaDiagnosticsNavbar = () => {
             </span>
           </div>
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2 transition-colors cursor-pointer group">
+            <a
+            target='_blank'
+              href="mailto:megadiagnosticsudaipur@gmail.com"
+              className="flex items-center gap-2 transition-colors cursor-pointer group"
+            >
               <Mail size={16} className="group-hover:scale-110 transition-transform" />
               <span className="group-hover:text-yellow-300 transition-colors">megadiagnosticsudaipur@gmail.com</span>
-            </span>
+            </a>
             <span className="flex items-center gap-2 transition-colors cursor-pointer group">
               <MapPin size={16} className="group-hover:scale-110 transition-transform" />
               <span className="group-hover:text-yellow-300 transition-colors">Udaipur, Rajasthan</span>
@@ -136,14 +151,16 @@ const MegaDiagnosticsNavbar = () => {
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           {/* Logo - Fixed and Properly Aligned */}
           <div className="flex items-center group cursor-pointer">
+            <Link href={"/"}>
             <div className=" transition-transform duration-300 group-hover:scale-105">
               <Image 
                 width={196}
                 height={196}
                 src={logo} 
                 alt="Mega Diagnostics Logo" 
-              />
+                />
             </div>
+                </Link>
        
           </div>
 
@@ -172,9 +189,10 @@ const MegaDiagnosticsNavbar = () => {
                     target.style.transform = 'scale(1)';
                   }}
                 >
+                <Link className='flex items-center ' href={item.href}>
                   {item.name}
-                <a href={item.href}>
 
+                  </Link>
                   {item.dropdown && (
                     <ChevronDown 
                     size={18} 
@@ -183,7 +201,6 @@ const MegaDiagnosticsNavbar = () => {
                       }`} 
                       />
                     )}
-                    </a>
                 </button>
                 
                 {/* Dropdown Menu */}

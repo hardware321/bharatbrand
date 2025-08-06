@@ -247,7 +247,7 @@ function MedicalServices() {
   ];
 
   return (
-    <div id='radiology' className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8f4ff 0%, #ede4ff 100%)' }}>
+    <div  className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f8f4ff 0%, #ede4ff 100%)' }}>
       {/* Hero Section */}
       <section className="pt-20 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
@@ -317,7 +317,7 @@ function MedicalServices() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id='radiology' className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
         {/* Tab Navigation */}
         <div className="flex justify-center mb-12">
           <div className="bg-white grid grid-flow-row md:grid-cols-2 grid-cols-1    rounded-2xl p-2 shadow-xl border-2" style={{ borderColor: 'rgba(139, 74, 139, 0.2)' }}>
