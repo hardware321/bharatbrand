@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar } from 'lucide-react';
-import logo from "../../public/Mega_Logo_Side.png"
+import newlogo from "../../public/Mega_Logo_Side.png"
 import Image from 'next/image';
 import Link from 'next/link';
 const MegaDiagnosticsNavbar = () => {
@@ -156,7 +156,7 @@ const MegaDiagnosticsNavbar = () => {
               <Image 
                 width={220}
                 height={220}
-                src={logo} 
+                src={newlogo} 
                 alt="Mega Diagnostics Logo" 
                 />
             </div>
