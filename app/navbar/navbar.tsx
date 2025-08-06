@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar } from 'lucide-react';
-import logo from "../newlogo.png"
+import logo from "../../public/Mega_Logo_Side.png"
 import Image from 'next/image';
 import Link from 'next/link';
 const MegaDiagnosticsNavbar = () => {
@@ -154,8 +154,8 @@ const MegaDiagnosticsNavbar = () => {
             <Link href={"/"}>
             <div className=" transition-transform duration-300 group-hover:scale-105">
               <Image 
-                width={196}
-                height={196}
+                width={220}
+                height={220}
                 src={logo} 
                 alt="Mega Diagnostics Logo" 
                 />
