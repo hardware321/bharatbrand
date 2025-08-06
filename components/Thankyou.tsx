@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 
-// Aceternity-inspired components
+// Aceternity-inspired componentsa
 const BackgroundBeams = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">

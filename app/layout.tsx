@@ -39,7 +39,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className='w-full '>
+            <main className=''>
               <Analytics/>
               <SpeedInsights/>
             </main>
