@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar
 import newlogo from "../../public/Mega_Logo_Side.png"
 import Image from 'next/image';
 import Link from 'next/link';
+
 const MegaDiagnosticsNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ const MegaDiagnosticsNavbar = () => {
   const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
 
   const navItems = [
-  
     { 
       name: 'Radiology Services', 
       href: '#radiology',
@@ -27,10 +27,9 @@ const MegaDiagnosticsNavbar = () => {
       href: '#Minimally-Invasive-Treatments',
       dropdown: ['Minimally Invasive Treatments', 'IPD Facilities', 'Emergency Procedures', 'Expert Care']
     },
-      { 
+    { 
       name: 'About Us', 
       href: 'about',
-      // dropdown: ['Our Story', 'Our Commitment', 'Our Team', 'Why Trust Us']
     },
     { 
       name: 'Contact Us', 
@@ -53,6 +52,11 @@ const MegaDiagnosticsNavbar = () => {
 
   const handleMobileDropdownToggle = (itemName: string) => {
     setActiveMobileDropdown(activeMobileDropdown === itemName ? null : itemName);
+  };
+
+  // Function to handle phone call
+  const handlePhoneCall = () => {
+    window.location.href = 'tel:+919351411126';
   };
 
   return (
@@ -161,7 +165,6 @@ const MegaDiagnosticsNavbar = () => {
                 />
             </div>
                 </Link>
-       
           </div>
 
           {/* Desktop Navigation - Enhanced Font Size */}
@@ -244,43 +247,66 @@ const MegaDiagnosticsNavbar = () => {
                 )}
               </div>
             ))}
-            
-            {/* Desktop Book Appointment Button */}
-      
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-3 rounded-lg transition-all duration-300"
-            style={{ 
-              color: isScrolled ? '#4a1d4a' : '#f0d97c',
-              textShadow: isScrolled ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.3)'
-            }}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            onMouseEnter={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = isScrolled ? 'rgba(74, 29, 74, 0.1)' : 'rgba(240, 217, 124, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = 'transparent';
-            }}
-          >
-            <div className="relative w-6 h-6">
-              <Menu 
-                size={24} 
-                className={`absolute inset-0 transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
-                }`} 
-              />
-              <X 
-                size={24} 
-                className={`absolute inset-0 transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
-                }`} 
-              />
-            </div>
-          </button>
+          {/* Mobile Right Side - Call Button + Menu Button */}
+          <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile Calling Button */}
+            <button
+              onClick={handlePhoneCall}
+              className="p-3 rounded-full transition-all duration-300 transform hover:scale-110 shadow-lg"
+              style={{ 
+                background: 'linear-gradient(135deg, #4a1d4a 0%, #663366 100%)',
+                color: '#f0d97c'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.background = 'linear-gradient(135deg, #663366 0%, #8b4a8b 100%)';
+                target.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.background = 'linear-gradient(135deg, #4a1d4a 0%, #663366 100%)';
+                target.style.transform = 'scale(1)';
+              }}
+              aria-label="Call Mega Diagnostics"
+            >
+              <Phone size={20} className="animate-pulse" />
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="p-3 rounded-lg transition-all duration-300"
+              style={{ 
+                color: isScrolled ? '#4a1d4a' : '#f0d97c',
+                textShadow: isScrolled ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.3)'
+              }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.backgroundColor = isScrolled ? 'rgba(74, 29, 74, 0.1)' : 'rgba(240, 217, 124, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLElement;
+                target.style.backgroundColor = 'transparent';
+              }}
+            >
+              <div className="relative w-6 h-6">
+                <Menu 
+                  size={24} 
+                  className={`absolute inset-0 transition-all duration-300 ${
+                    isMobileMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
+                  }`} 
+                />
+                <X 
+                  size={24} 
+                  className={`absolute inset-0 transition-all duration-300 ${
+                    isMobileMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
+                  }`} 
+                />
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -298,6 +324,23 @@ const MegaDiagnosticsNavbar = () => {
             }}
           >
             <div className="px-4 py-4 space-y-2">
+              {/* Mobile Contact Info Bar */}
+              <div className="mb-4 p-3 rounded-lg" style={{ background: 'linear-gradient(135deg, rgba(74, 29, 74, 0.1) 0%, rgba(139, 74, 139, 0.1) 100%)' }}>
+                <div className="flex flex-wrap gap-3 text-sm">
+                  <button
+                    onClick={handlePhoneCall}
+                    className="flex items-center gap-2 text-purple-800 hover:text-purple-600 transition-colors"
+                  >
+                    <Phone size={14} />
+                    <span className="font-medium">+91 93514 11126</span>
+                  </button>
+                  <div className="flex items-center gap-2 text-purple-600">
+                    <Clock size={14} />
+                    <span>24x7 Available</span>
+                  </div>
+                </div>
+              </div>
+
               {navItems.map((item, index) => (
                 <div key={item.name}>
                   <button

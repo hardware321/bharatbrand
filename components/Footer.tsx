@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin, Activity, Stethoscope } from 'lucide-react';
+import Link from 'next/link';
 
 const MegaDiagnosticsFooter = () => {
   return (
@@ -301,10 +302,10 @@ const MegaDiagnosticsFooter = () => {
               © 2024 Mega Diagnostics. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              {['Privacy Policy', 'Terms of Service', 'Patient Rights', 'Quality Standards'].map((link) => (
+              {['Privacy Policy', 'Terms of Service', ].map((link) => (
                 <a 
                   key={link}
-                  href="#" 
+                  href="/" 
                   className="text-sm transition-all duration-300 group"
                   style={{ color: '#e6c76b' }}
                   onMouseEnter={(e) => {
@@ -319,6 +320,16 @@ const MegaDiagnosticsFooter = () => {
                   <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
                     {link}
                   </span>
+                  <Link  href="/carrier">
+
+                      <span className="border-b border-transparent ml-4 group-hover:border-current transition-all duration-300">
+                    Carrier
+                  </span>
+                  
+                  
+                  </Link>
+                
+                  
                 </a>
               ))}
             </div>

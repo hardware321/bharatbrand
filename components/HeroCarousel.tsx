@@ -45,7 +45,7 @@ const NimaayaHeroSection = () => {
   const slides = [
     {
       id: 1,
-      title: "MEGA Care. MEGA Accuracy.",
+      title: "MEGA CARE. MEGA ACCURACY.",
       subtitle: "Advanced Diagnostic and Interventional Radiology Center",
       description: "Rajasthan's first fully digital, automated diagnostic center with cutting-edge technology and expert radiologists from top institutes of India.",
       image: "https://plus.unsplash.com/premium_photo-1679288660702-987a6fecf262?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

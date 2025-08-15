@@ -162,7 +162,7 @@ const Locations: React.FC = () => {
   };
 
   const openGoogleMaps = (): void => {
-    const address = "Udaipur, Rajasthan 313001, India";
+    const address = "MEGA DIAGNOSTICS AND INTERVENTIONS udaipur";
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     window.open(url, '_blank');
   };
@@ -229,14 +229,15 @@ const Locations: React.FC = () => {
                 <h4 className="font-semibold text-sm text-gray-900 mb-1">Mega Diagnostics Udaipur</h4>
                 <p className="text-xs text-gray-600">Medical Complex, Udaipur</p>
               </div>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115313.25671782021!2d73.58827479726563!3d24.57128060000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967ef72c2b57d0f%3A0x9c46a74e5c6d956e!2sUdaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1706195520000!5m2!1sen!2sin"
-                className="w-full h-full border-0 transition-all duration-300 group-hover:contrast-110 group-hover:saturate-110"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Mega Diagnostics Udaipur Location"
-              />
+            <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3627.947901470098!2d73.68974368917718!3d24.594146459545655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDM1JzM4LjkiTiA3M8KwNDEnMzIuNCJF!5e0!3m2!1sen!2sin!4v1706195520000!5m2!1sen!2sin"
+  className="w-full h-full border-0 transition-all duration-300 group-hover:contrast-110 group-hover:saturate-110"
+  allowFullScreen
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  title="Mega Diagnostics Udaipur Location"
+/>
+
             </div>
           </Card>
           
