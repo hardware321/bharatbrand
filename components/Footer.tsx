@@ -1,9 +1,51 @@
 "use client";
-import React from 'react';
-import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin, Activity, Stethoscope } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin, Activity, Stethoscope, Send } from 'lucide-react';
 import Link from 'next/link';
 
 const MegaDiagnosticsFooter = () => {
+  const [decorativeElements, setDecorativeElements] = useState<Array<{
+    left: string;
+    top: string;
+    animationDelay: string;
+    animationDuration: string;
+  }>>([]);
+
+  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  // Generate decorative elements only on client side
+  useEffect(() => {
+    const elements = [...Array(8)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 3}s`,
+      animationDuration: `${3 + Math.random() * 2}s`,
+    }));
+    setDecorativeElements(elements);
+  }, []);
+
+  // Quick Links navigation mapping
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Our Services', href: '#services' },
+    { name: 'Book Test', href: '/Book' },
+    { name: 'Contact Us', href: '/Book' },
+    { name: 'carrier', href: '/carrier' }
+  ];
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() && email.includes('@')) {
+      setIsSubscribed(true);
+      setEmail('');
+      setTimeout(() => setIsSubscribed(false), 3000);
+    }
+  };
+
   return (
     <footer 
       className="text-white relative overflow-hidden"
@@ -13,15 +55,15 @@ const MegaDiagnosticsFooter = () => {
     >
       {/* Decorative background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
-        {[...Array(8)].map((_, i) => (
+        {decorativeElements.map((element, i) => (
           <div
             key={i}
             className="absolute w-32 h-32 rounded-full animate-pulse"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              left: element.left,
+              top: element.top,
+              animationDelay: element.animationDelay,
+              animationDuration: element.animationDuration,
               backgroundColor: 'rgba(240, 217, 124, 0.1)'
             }}
           />
@@ -29,7 +71,7 @@ const MegaDiagnosticsFooter = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center group">
@@ -55,54 +97,22 @@ const MegaDiagnosticsFooter = () => {
               pathology tests, and comprehensive health checkups with precision and care.
             </p>
             <div className="flex space-x-4">
-              <Facebook 
-                className="h-6 w-6 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-6" 
-                style={{ color: '#e6c76b' }}
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#f0d97c';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#e6c76b';
-                }}
-              />
-              <Twitter 
-                className="h-6 w-6 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-6" 
-                style={{ color: '#e6c76b' }}
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#f0d97c';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#e6c76b';
-                }}
-              />
-              <Instagram 
-                className="h-6 w-6 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-6" 
-                style={{ color: '#e6c76b' }}
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#f0d97c';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#e6c76b';
-                }}
-              />
-              <Linkedin 
-                className="h-6 w-6 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-6" 
-                style={{ color: '#e6c76b' }}
-                onMouseEnter={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#f0d97c';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as HTMLElement;
-                  target.style.color = '#e6c76b';
-                }}
-              />
+              {[
+                { Icon: Facebook, name: 'facebook' },
+                { Icon: Twitter, name: 'twitter' },
+                { Icon: Instagram, name: 'instagram' },
+                { Icon: Linkedin, name: 'linkedin' }
+              ].map(({ Icon, name }) => (
+                <Icon 
+                  key={name}
+                  className="h-6 w-6 cursor-pointer transition-all duration-300 transform hover:scale-110 hover:rotate-6" 
+                  style={{ 
+                    color: hoveredIcon === name ? '#f0d97c' : '#e6c76b' 
+                  }}
+                  onMouseEnter={() => setHoveredIcon(name)}
+                  onMouseLeave={() => setHoveredIcon(null)}
+                />
+              ))}
             </div>
           </div>
 
@@ -116,33 +126,21 @@ const MegaDiagnosticsFooter = () => {
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {[
-                'Home',
-                'About Us', 
-                'Our Services',
-                'Book Test',
-                'Health Packages',
-                'Reports Online',
-                'Contact Us'
-              ].map((link, index) => (
-                <li key={link}>
-                  <a 
-                    href="#" 
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    href={link.href}
                     className="text-sm transition-all duration-300 transform hover:translate-x-2 inline-block group"
-                    style={{ color: '#e6c76b' }}
-                    onMouseEnter={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#f0d97c';
+                    style={{ 
+                      color: hoveredLink === link.name ? '#f0d97c' : '#e6c76b' 
                     }}
-                    onMouseLeave={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#e6c76b';
-                    }}
+                    onMouseEnter={() => setHoveredLink(link.name)}
+                    onMouseLeave={() => setHoveredLink(null)}
                   >
                     <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
-                      {link}
+                      {link.name}
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -164,22 +162,16 @@ const MegaDiagnosticsFooter = () => {
                 'Ultrasound & Doppler',
                 'Blood Tests',
                 'Pathology Services',
-                'Health Checkups',
-                'Home Collection',
-                'Interventional Radiology'
-              ].map((service, index) => (
+                'Health Checkups'
+              ].map((service) => (
                 <li 
                   key={service}
                   className="text-sm cursor-pointer transition-all duration-300 hover:translate-x-1 transform group"
-                  style={{ color: '#e6c76b' }}
-                  onMouseEnter={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#f0d97c';
+                  style={{ 
+                    color: hoveredLink === service ? '#f0d97c' : '#e6c76b' 
                   }}
-                  onMouseLeave={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#e6c76b';
-                  }}
+                  onMouseEnter={() => setHoveredLink(service)}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
                     {service}
@@ -187,6 +179,61 @@ const MegaDiagnosticsFooter = () => {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div className="space-y-6">
+            <h3 
+              className="text-lg font-semibold flex items-center gap-2"
+              style={{ color: '#f0d97c' }}
+            >
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#e6c76b' }}></div>
+              Newsletter
+            </h3>
+            <div className="space-y-4">
+              <p className="text-sm leading-relaxed" style={{ color: '#e6c76b' }}>
+                Stay updated with our latest health tips, diagnostic insights, and special offers.
+              </p>
+              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 rounded-lg text-sm transition-all duration-300 focus:outline-none focus:ring-2"
+                    style={{ 
+                      backgroundColor: 'rgba(230, 199, 107, 0.1)',
+                      color: '#f0d97c',
+                      border: '1px solid rgba(230, 199, 107, 0.3)',
+                    }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 px-4 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 group"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)',
+                    color: '#4a1d4a'
+                  }}
+                >
+                  {isSubscribed ? (
+                    <>
+                      <div className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin"></div>
+                      Subscribed!
+                    </>
+                  ) : (
+                    <>
+                      Subscribe
+                      <Send size={16} className="transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
+                </button>
+              </form>
+              <p className="text-xs" style={{ color: 'rgba(230, 199, 107, 0.7)' }}>
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </div>
           </div>
 
           {/* Contact Info */}
@@ -217,32 +264,19 @@ const MegaDiagnosticsFooter = () => {
                   style={{ color: '#f0d97c' }}
                 />
                 <div className="text-sm" style={{ color: '#e6c76b' }}>
-                  <p 
-                    className="cursor-pointer transition-colors hover:underline"
-                    onMouseEnter={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#f0d97c';
-                    }}
-                    onMouseLeave={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#e6c76b';
-                    }}
-                  >
-                    +91 93514 11126
-                  </p>
-                  <p 
-                    className="cursor-pointer transition-colors hover:underline"
-                    onMouseEnter={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#f0d97c';
-                    }}
-                    onMouseLeave={(e) => {
-                      const target = e.target as HTMLElement;
-                      target.style.color = '#e6c76b';
-                    }}
-                  >
-                    +91 90243 11126
-                  </p>
+                  {['+91 93514 11126', '+91 90243 11126'].map((phone) => (
+                    <p 
+                      key={phone}
+                      className="cursor-pointer transition-colors hover:underline"
+                      style={{ 
+                        color: hoveredLink === phone ? '#f0d97c' : '#e6c76b' 
+                      }}
+                      onMouseEnter={() => setHoveredLink(phone)}
+                      onMouseLeave={() => setHoveredLink(null)}
+                    >
+                      {phone}
+                    </p>
+                  ))}
                 </div>
               </div>
               
@@ -253,15 +287,11 @@ const MegaDiagnosticsFooter = () => {
                 />
                 <p 
                   className="text-sm cursor-pointer transition-colors hover:underline"
-                  style={{ color: '#e6c76b' }}
-                  onMouseEnter={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#f0d97c';
+                  style={{ 
+                    color: hoveredLink === 'email' ? '#f0d97c' : '#e6c76b' 
                   }}
-                  onMouseLeave={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#e6c76b';
-                  }}
+                  onMouseEnter={() => setHoveredLink('email')}
+                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   megadiagnosticsudaipur@gmail.com
                 </p>
@@ -299,39 +329,48 @@ const MegaDiagnosticsFooter = () => {
 
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm" style={{ color: '#e6c76b' }}>
-              © 2024 Mega Diagnostics. All rights reserved.
+              © 2025 Mega Diagnostics. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              {['Privacy Policy', 'Terms of Service', ].map((link) => (
-                <a 
-                  key={link}
-                  href="/" 
-                  className="text-sm transition-all duration-300 group"
-                  style={{ color: '#e6c76b' }}
-                  onMouseEnter={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#f0d97c';
-                  }}
-                  onMouseLeave={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.color = '#e6c76b';
-                  }}
-                >
-                  <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
-                    {link}
-                  </span>
-                  <Link  href="/carrier">
-
-                      <span className="border-b border-transparent ml-4 group-hover:border-current transition-all duration-300">
-                    Carrier
-                  </span>
-                  
-                  
-                  </Link>
-                
-                  
-                </a>
-              ))}
+              <Link 
+                href="/privacy-policy" 
+                className="text-sm transition-all duration-300 group"
+                style={{ 
+                  color: hoveredLink === 'Privacy Policy' ? '#f0d97c' : '#e6c76b' 
+                }}
+                onMouseEnter={() => setHoveredLink('Privacy Policy')}
+                onMouseLeave={() => setHoveredLink(null)}
+              >
+                <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
+                  Privacy Policy
+                </span>
+              </Link>
+              <Link 
+                href="/terms-of-service" 
+                className="text-sm transition-all duration-300 group"
+                style={{ 
+                  color: hoveredLink === 'Terms of Service' ? '#f0d97c' : '#e6c76b' 
+                }}
+                onMouseEnter={() => setHoveredLink('Terms of Service')}
+                onMouseLeave={() => setHoveredLink(null)}
+              >
+                <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
+                  Terms of Service
+                </span>
+              </Link>
+              <Link 
+                href="/careers" 
+                className="text-sm transition-all duration-300 group"
+                style={{ 
+                  color: hoveredLink === 'Careers' ? '#f0d97c' : '#e6c76b' 
+                }}
+                onMouseEnter={() => setHoveredLink('Careers')}
+                onMouseLeave={() => setHoveredLink(null)}
+              >
+                <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
+                  Careers
+                </span>
+              </Link>
             </div>
           </div>
 

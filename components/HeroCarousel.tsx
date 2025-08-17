@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
-import {  Play, Pause } from 'lucide-react';
+import { Play, Pause, Stethoscope, Home, Heart, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 const NimaayaHeroSection = () => {
@@ -60,6 +60,41 @@ const NimaayaHeroSection = () => {
       image: "https://plus.unsplash.com/premium_photo-1723809656722-ba56481bce5d?q=80&w=1121&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       cta: "Emergency Services",
       secondary: "Contact Us"
+    }
+  ];
+  
+  const serviceBoxes = [
+    {
+      id: 1,
+      title: "Book Test",
+      icon: Stethoscope,
+      description: "Schedule your diagnostic tests online",
+      color: "#4ade80",
+      href: "/Book"
+    },
+    {
+      id: 2,
+      title: "Home Visit",
+      icon: Home,
+      description: "Get diagnostic services at home",
+      color: "#60a5fa",
+      href: "/Book"
+    },
+    {
+      id: 3,
+      title: "Health Package",
+      icon: Heart,
+      description: "Comprehensive health check-ups",
+      color: "#f59e0b",
+      href: "/Book"
+    },
+    {
+      id: 4,
+      title: "Download Report",
+      icon: FileText,
+      description: "Access your test results",
+      color: "#ec4899",
+      href: "/Book"
     }
   ];
 
@@ -204,8 +239,6 @@ const NimaayaHeroSection = () => {
         </div>
       </div>
 
-
-
       {/* Bottom Controls */}
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20">
         {/* Slide Indicators */}
@@ -263,14 +296,58 @@ const NimaayaHeroSection = () => {
       </div>
 
       {/* Progress Bar */}
-      <div className="absolute bottom-0 left-0 w-full h-1 z-20" style={{ backgroundColor: 'rgba(240, 217, 124, 0.2)' }}>
+      <div className="absolute bottom-0 left-0 w-full h-1 z-20 hidden lg:block" style={{ backgroundColor: 'rgba(240, 217, 124, 0.2)' }}>
         <div 
           className="h-full transition-all duration-300"
           style={{ 
-            width: `${((currentSlide + 1) / slides.length) * 100}%`,
-            background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)'
+        width: `${((currentSlide + 1) / slides.length) * 100}%`,
+        background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)'
           }}
         />
+      </div>
+
+      {/* Small Service Boxes Row - Fixed z-index and clickability */}
+      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 mb-4 hidden lg:block" style={{ zIndex: 30 }}>
+        <div className="flex items-center justify-center gap-3">
+          {serviceBoxes.map((service, index) => {
+            const IconComponent = service.icon;
+            return (
+              <Link href={service.href} key={service.id} className="block">
+                <div
+                  className={`bg-white rounded-md shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer group hover:scale-110 active:scale-95 ${
+                    hasLoaded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4'
+                  }`}
+                  style={{ 
+                    width: '100px',
+                    height: '100px',
+                    transitionDelay: `${1000 + (index * 50)}ms`,
+                    position: 'relative',
+                    zIndex: 31
+                  }}
+                  title={service.description}
+                >
+                  <div className="w-full h-full flex flex-col items-center justify-center p-2">
+                    <IconComponent 
+                      size={20} 
+                      style={{ color: service.color }}
+                      className="mb-1"
+                    />
+                    <span 
+                      className="text-xs font-medium leading-tight text-center"
+                      style={{ 
+                        color: service.color,
+                      }}
+                    >
+                      {service.title.split(' ').map((word, i) => (
+                        <div key={i}>{word}</div>
+                      ))}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

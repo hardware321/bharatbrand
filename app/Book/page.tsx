@@ -2,7 +2,6 @@
 import Hero from "@/components/Hero";
 import BookTestPage from "@/components/Book";
 import MegaDiagnosticsNavbar from "../navbar/navbar";
-import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { defaultEmail } from "@/lib/data";
 import { createEmail } from "@/lib/actions/blog";
@@ -76,7 +75,6 @@ export default function Page() {
       <BookTestPage onHandleSubmit={onHandleSubmit} defaultEmail={defaultEmail} />
       </div>
 <div className="">
-  <Footer/>
 </div>
     </div>
   )

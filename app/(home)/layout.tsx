@@ -1,8 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
+
+
 export default function Layout({ children }: { children: ReactNode }) {
-	return (
-		<div>
-			{children}
-		</div>
-	);
+  return (
+    <div className="relative">
+      {children}
+    </div>
+  );
 }

@@ -5,8 +5,6 @@ import IntervantionalRadiology from '@/components/intervantionalRadiology';
 import Radiologyservices from '@/components/Radiologyservices';
 
 export default function Page() {
-
-
   return (
     <div className="w-full overflow-x-hidden relative">
       <NimaayaNavbar />
@@ -14,8 +12,6 @@ export default function Page() {
       <DiagnosticService />
       <Radiologyservices />
       <IntervantionalRadiology />
-      
-
     </div>
   );
 }

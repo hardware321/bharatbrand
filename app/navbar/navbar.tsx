@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar
 import newlogo from "../../public/Mega_Logo_Side.png"
 import Image from 'next/image';
 import Link from 'next/link';
+import Whatsappbutton from '@/components/Whatsappbutton';
 
 const MegaDiagnosticsNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,6 +63,7 @@ const MegaDiagnosticsNavbar = () => {
   return (
     <>
       {/* Gradient Overlay - Only visible when not scrolled */}
+      <Whatsappbutton/>
       <div 
         className={`fixed top-0 left-0 w-full pointer-events-none transition-opacity duration-500 z-40 ${
           isScrolled ? 'opacity-0' : 'opacity-100'
