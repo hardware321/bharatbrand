@@ -38,7 +38,8 @@ import {
   Globe,
   BookOpen,
   Car,
-  Home
+  Home,
+  User,
 } from 'lucide-react';
 
 // Custom hook for scroll animations
@@ -79,19 +80,58 @@ const useScrollAnimation = () => {
 };
 
 const MegaCareers = () => {
-  const [selectedJob, setSelectedJob] = useState<{
-    id: number;
-    title: string;
-    department: string;
-    type: string;
-    experience: string;
-    location: string;
-    salary: string;
-    description: string;
-    requirements: string[];
-    responsibilities: string[];
-  } | null>(null);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    position: '',
+    experience: '',
+    qualification: '',
+    currentLocation: '',
+    availability: '',
+    message: ''
+  });
+
   useScrollAnimation();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Format the message for WhatsApp
+    const message = `Hi! I'm interested in joining Mega Diagnostics.
+
+📝 Application Details:
+• Name: ${formData.fullName}
+• Email: ${formData.email}
+• Phone: ${formData.phone}
+• Position Applied: ${formData.position}
+• Experience: ${formData.experience}
+• Qualification: ${formData.qualification}
+• Current Location: ${formData.currentLocation}
+• Availability: ${formData.availability}
+
+Additional Message:
+${formData.message || 'N/A'}
+
+Looking forward to hearing from you!`;
+
+    // WhatsApp number
+    const whatsappNumber = '919783417878';
+    
+    // Create WhatsApp URL
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+  };
 
   const benefits = [
     {
@@ -123,153 +163,6 @@ const MegaCareers = () => {
       title: 'Team Events',
       description: 'Regular team building activities and celebrations',
       icon: Users
-    }
-  ];
-
-  const jobOpenings = [
-    {
-      id: 1,
-      title: 'Senior Radiologist',
-      department: 'Radiology',
-      type: 'Full-time',
-      experience: '5-8 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹15-25 LPA',
-      description: 'We are seeking an experienced Radiologist to join our team. The candidate will be responsible for interpreting medical images, providing accurate diagnoses, and collaborating with other healthcare professionals.',
-      requirements: [
-        'MD in Radiodiagnosis from recognized institution',
-        'Valid medical license and registration',
-        '5+ years of experience in diagnostic radiology',
-        'Expertise in CT, MRI, Ultrasound, and X-ray interpretation',
-        'Strong communication and interpersonal skills'
-      ],
-      responsibilities: [
-        'Interpret diagnostic imaging studies including CT, MRI, Ultrasound',
-        'Provide accurate and timely radiology reports',
-        'Collaborate with referring physicians',
-        'Participate in multidisciplinary team meetings',
-        'Ensure quality control and safety protocols'
-      ]
-    },
-    {
-      id: 2,
-      title: 'Clinical Pathologist',
-      department: 'Pathology',
-      type: 'Full-time',
-      experience: '3-6 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹12-20 LPA',
-      description: 'Join our pathology team to provide accurate laboratory diagnoses and contribute to patient care through precise testing and analysis.',
-      requirements: [
-        'MD in Pathology from recognized medical college',
-        'Valid medical license',
-        'Experience in clinical and anatomical pathology',
-        'Knowledge of laboratory management systems',
-        'Attention to detail and analytical skills'
-      ],
-      responsibilities: [
-        'Perform microscopic examination of tissue samples',
-        'Oversee laboratory operations and quality control',
-        'Interpret laboratory test results',
-        'Collaborate with clinical team for patient diagnosis',
-        'Ensure compliance with laboratory standards'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Radiology Technician',
-      department: 'Radiology',
-      type: 'Full-time',
-      experience: '2-4 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹3-6 LPA',
-      description: 'We need skilled Radiology Technicians to operate imaging equipment and assist in providing quality diagnostic services.',
-      requirements: [
-        'Diploma/Certificate in Radiology Technology',
-        'Valid technician license',
-        'Experience with CT, MRI, X-ray equipment',
-        'Knowledge of radiation safety protocols',
-        'Good communication skills'
-      ],
-      responsibilities: [
-        'Operate radiological equipment safely and efficiently',
-        'Prepare patients for imaging procedures',
-        'Maintain equipment and ensure quality control',
-        'Follow radiation safety protocols',
-        'Assist radiologists during procedures'
-      ]
-    },
-    {
-      id: 4,
-      title: 'Lab Technologist',
-      department: 'Laboratory',
-      type: 'Full-time',
-      experience: '1-3 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹2.5-4.5 LPA',
-      description: 'Looking for dedicated Lab Technologists to perform various laboratory tests and maintain high standards of accuracy.',
-      requirements: [
-        'BSc in Medical Laboratory Technology',
-        'Knowledge of laboratory procedures and equipment',
-        'Experience in clinical laboratory testing',
-        'Attention to detail and accuracy',
-        'Computer literacy'
-      ],
-      responsibilities: [
-        'Perform routine and specialized laboratory tests',
-        'Maintain laboratory equipment and instruments',
-        'Follow quality control procedures',
-        'Prepare and analyze samples',
-        'Document and report test results accurately'
-      ]
-    },
-    {
-      id: 5,
-      title: 'Patient Care Coordinator',
-      department: 'Administration',
-      type: 'Full-time',
-      experience: '1-2 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹2-3.5 LPA',
-      description: 'Join our patient care team to ensure excellent patient experience and coordinate various healthcare services.',
-      requirements: [
-        'Graduate in any discipline',
-        'Excellent communication skills in Hindi and English',
-        'Basic computer knowledge',
-        'Customer service experience preferred',
-        'Empathetic and patient-oriented approach'
-      ],
-      responsibilities: [
-        'Coordinate patient appointments and scheduling',
-        'Provide information about services and procedures',
-        'Handle patient inquiries and concerns',
-        'Maintain patient records and documentation',
-        'Ensure smooth patient flow and experience'
-      ]
-    },
-    {
-      id: 6,
-      title: 'Biomedical Engineer',
-      department: 'Technical',
-      type: 'Full-time',
-      experience: '2-5 Years',
-      location: 'Udaipur, Rajasthan',
-      salary: '₹4-8 LPA',
-      description: 'We need a skilled Biomedical Engineer to maintain and service our advanced medical equipment.',
-      requirements: [
-        'BE/BTech in Biomedical Engineering',
-        'Experience in medical equipment maintenance',
-        'Knowledge of CT, MRI, Ultrasound systems',
-        'Problem-solving and analytical skills',
-        'Willingness to work in shifts'
-      ],
-      responsibilities: [
-        'Maintain and service medical imaging equipment',
-        'Troubleshoot technical issues',
-        'Ensure equipment compliance and safety',
-        'Coordinate with vendors for repairs',
-        'Train staff on equipment operation'
-      ]
     }
   ];
 
@@ -306,9 +199,23 @@ const MegaCareers = () => {
     }
   ];
 
+  const positions = [
+    'Senior Radiologist',
+    'Clinical Pathologist', 
+    'Radiology Technician',
+    'Lab Technologist',
+    'Patient Care Coordinator',
+    'Biomedical Engineer',
+    'Reception Staff',
+    'Administrative Assistant',
+    'Quality Control Specialist',
+    'IT Support Specialist',
+    'Other'
+  ];
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-gray-50">
-        <MegaDiagnosticsNavbar/>
+      <MegaDiagnosticsNavbar/>
       <style jsx>{`
         .scroll-animate {
           transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
@@ -408,69 +315,201 @@ const MegaCareers = () => {
         </div>
       </section>
 
-      {/* Current Job Openings */}
+      {/* Application Form Section */}
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 md:mb-16 scroll-animate" style={{ opacity: 0, transform: 'translateY(32px)' }}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">Current Job Openings</h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto">
-              Explore exciting career opportunities in healthcare and diagnostics
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">Apply Now</h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              Ready to join our team? Fill out the application form below and we'll get back to you soon!
             </p>
           </div>
 
-          <div className="grid gap-6 md:gap-8">
-            {jobOpenings.map((job, index) => (
-              <Card key={job.id} className="shadow-lg border-0 hover:shadow-xl transition-all duration-300 scroll-animate bg-gradient-to-br from-white to-gray-50" style={{ opacity: 0, transform: 'translateY(20px)', transitionDelay: `${index * 100}ms` }}>
-                <CardContent className="p-6 md:p-8">
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">{job.title}</h3>
-                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
-                          {job.type}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                        <span className="flex items-center gap-1">
-                          <Building2 className="h-4 w-4" />
-                          {job.department}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          {job.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {job.experience}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <DollarSign className="h-4 w-4" />
-                          {job.salary}
-                        </span>
-                      </div>
-                    </div>
-                    <Button 
-                      onClick={() => setSelectedJob(job)}
-                      className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:shadow-lg"
+          <Card className="shadow-xl border-0 scroll-animate bg-gradient-to-br from-white to-gray-50" style={{ opacity: 0, transform: 'translateY(32px)' }}>
+            <CardContent className="p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="fullName" className="block text-sm font-bold text-gray-700 mb-2">
+                      <User className="inline h-4 w-4 mr-1" />
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
+                      <Mail className="inline h-4 w-4 mr-1" />
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-bold text-gray-700 mb-2">
+                      <Phone className="inline h-4 w-4 mr-1" />
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="position" className="block text-sm font-bold text-gray-700 mb-2">
+                      <Briefcase className="inline h-4 w-4 mr-1" />
+                      Position Applied For *
+                    </label>
+                    <select
+                      id="position"
+                      name="position"
+                      value={formData.position}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
                     >
-                      View Details
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                      <option value="">Select a position</option>
+                      {positions.map((pos, index) => (
+                        <option key={index} value={pos}>{pos}</option>
+                      ))}
+                    </select>
                   </div>
-                  
-                  <p className="text-gray-600 leading-relaxed mb-4">{job.description}</p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {job.requirements.slice(0, 3).map((req, idx) => (
-                      <span key={idx} className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">
-                        {req.split(' ').slice(0, 3).join(' ')}...
-                      </span>
-                    ))}
+
+                  <div>
+                    <label htmlFor="experience" className="block text-sm font-bold text-gray-700 mb-2">
+                      <Star className="inline h-4 w-4 mr-1" />
+                      Years of Experience *
+                    </label>
+                    <select
+                      id="experience"
+                      name="experience"
+                      value={formData.experience}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                    >
+                      <option value="">Select experience</option>
+                      <option value="Fresher">Fresher</option>
+                      <option value="1-2 Years">1-2 Years</option>
+                      <option value="3-5 Years">3-5 Years</option>
+                      <option value="6-10 Years">6-10 Years</option>
+                      <option value="10+ Years">10+ Years</option>
+                    </select>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+                  <div>
+                    <label htmlFor="qualification" className="block text-sm font-bold text-gray-700 mb-2">
+                      <GraduationCap className="inline h-4 w-4 mr-1" />
+                      Highest Qualification *
+                    </label>
+                    <input
+                      type="text"
+                      id="qualification"
+                      name="qualification"
+                      value={formData.qualification}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                      placeholder="e.g., MBBS, MD, BSc MLT, Diploma"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="currentLocation" className="block text-sm font-bold text-gray-700 mb-2">
+                      <MapPin className="inline h-4 w-4 mr-1" />
+                      Current Location *
+                    </label>
+                    <input
+                      type="text"
+                      id="currentLocation"
+                      name="currentLocation"
+                      value={formData.currentLocation}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your current city"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="availability" className="block text-sm font-bold text-gray-700 mb-2">
+                      <Clock className="inline h-4 w-4 mr-1" />
+                      Availability *
+                    </label>
+                    <select
+                      id="availability"
+                      name="availability"
+                      value={formData.availability}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                    >
+                      <option value="">Select availability</option>
+                      <option value="Immediate">Immediate</option>
+                      <option value="15 Days">15 Days</option>
+                      <option value="1 Month">1 Month</option>
+                      <option value="2 Months">2 Months</option>
+                      <option value="3+ Months">3+ Months</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
+                    <FileText className="inline h-4 w-4 mr-1" />
+                    Additional Message (Optional)
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"
+                    placeholder="Tell us why you'd like to work with us or any other relevant information..."
+                  />
+                </div>
+
+                <div className="text-center pt-6">
+                  <Button 
+                    type="submit"
+                    className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white px-8 py-4 rounded-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105 text-lg font-bold"
+                  >
+                    <Send className="mr-2 h-5 w-5" />
+                    Submit Application via WhatsApp
+                  </Button>
+                  <p className="text-sm text-gray-600 mt-3">
+                    Your application details will be sent to our HR team via WhatsApp
+                  </p>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -478,9 +517,9 @@ const MegaCareers = () => {
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-purple-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16 scroll-animate" style={{ opacity: 0, transform: 'translateY(32px)' }}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">How to Apply</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-gray-900">Application Process</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-              Ready to join our team? Follow these simple steps to apply
+              Here's what happens after you submit your application
             </p>
           </div>
 
@@ -490,8 +529,8 @@ const MegaCareers = () => {
                 <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center shadow-lg">
                   <span className="text-2xl font-bold">1</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Choose Position</h3>
-                <p className="text-gray-600">Browse through our current job openings and select the position that matches your skills and interests.</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Application Review</h3>
+                <p className="text-gray-600">Our HR team will review your application and contact you within 2-3 business days.</p>
               </CardContent>
             </Card>
 
@@ -500,8 +539,8 @@ const MegaCareers = () => {
                 <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 text-purple-900 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center shadow-lg">
                   <span className="text-2xl font-bold">2</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Submit Application</h3>
-                <p className="text-gray-600">Send your resume and cover letter to our HR department or apply directly through our online portal.</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Interview Process</h3>
+                <p className="text-gray-600">Qualified candidates will be invited for an interview with our medical and administrative team.</p>
               </CardContent>
             </Card>
 
@@ -510,8 +549,8 @@ const MegaCareers = () => {
                 <div className="bg-gradient-to-br from-green-500 to-green-700 text-white p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center shadow-lg">
                   <span className="text-2xl font-bold">3</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Interview Process</h3>
-                <p className="text-gray-600">Our HR team will review your application and schedule interviews with shortlisted candidates.</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Welcome Aboard</h3>
+                <p className="text-gray-600">Successful candidates will receive an offer letter and begin their journey with Mega Diagnostics.</p>
               </CardContent>
             </Card>
           </div>
@@ -519,8 +558,8 @@ const MegaCareers = () => {
           <div className="text-center mt-12 scroll-animate" style={{ opacity: 0, transform: 'translateY(32px)' }}>
             <Card className="p-8 shadow-xl border-0 bg-gradient-to-br from-purple-600 to-purple-800 text-white max-w-2xl mx-auto">
               <CardContent className="p-0">
-                <h3 className="text-2xl font-bold mb-4">Ready to Apply?</h3>
-                <p className="mb-6 text-lg">Send your resume and cover letter to our HR department</p>
+                <h3 className="text-2xl font-bold mb-4">Need More Information?</h3>
+                <p className="mb-6 text-lg">Contact our HR department directly</p>
                 <div className="space-y-4">
                   <div className="flex items-center justify-center gap-2">
                     <Mail className="h-5 w-5" />
@@ -528,58 +567,14 @@ const MegaCareers = () => {
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <Phone className="h-5 w-5" />
-                    <span className="text-lg">+91 294 XXX XXXX</span>
+                    <span className="text-lg">+91 9351411126</span>
                   </div>
                 </div>
-                <Button className="mt-6 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-purple-900 font-bold px-8 py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                  <Send className="mr-2 h-5 w-5" />
-                  Apply Now
-                </Button>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
-
-      {/* Job Detail Modal
-      {selectedJob && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-y-auto w-full">
-            <div className="p-6 border-b">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedJob.title}</h2>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                    <span className="flex items-center gap-1">
-                      <Building2 className="h-4 w-4" />
-                      {selectedJob.department}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      {selectedJob.location}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {selectedJob.experience}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <DollarSign className="h-4 w-4" />
-                      {selectedJob.salary}
-                    </span>
-                  </div>
-                </div>
-                <Button 
-                  onClick={() => setSelectedJob(null)}
-                  variant="outline"
-                  className="px-6"
-                >
-                  Close
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

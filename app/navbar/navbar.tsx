@@ -85,12 +85,12 @@ const MegaDiagnosticsNavbar = () => {
           <div className="flex flex-wrap gap-6">
             <span
               className="flex items-center gap-2 transition-colors cursor-pointer group"
-              onClick={() => window.open('https://wa.me/919351411126', '_blank')}
+              onClick={() => window.open('https://wa.me/+919783417878', '_blank')}
               role="button"
               tabIndex={0}
               onKeyPress={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                window.open('https://wa.me/919351411126', '_blank');
+                window.open('https://wa.me/+919783417878', '_blank');
               }
               }}
             >

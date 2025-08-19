@@ -346,20 +346,7 @@ const MegaDiagnosticsFooter = () => {
                 </span>
               </Link>
               <Link 
-                href="/terms-of-service" 
-                className="text-sm transition-all duration-300 group"
-                style={{ 
-                  color: hoveredLink === 'Terms of Service' ? '#f0d97c' : '#e6c76b' 
-                }}
-                onMouseEnter={() => setHoveredLink('Terms of Service')}
-                onMouseLeave={() => setHoveredLink(null)}
-              >
-                <span className="border-b border-transparent group-hover:border-current transition-all duration-300">
-                  Terms of Service
-                </span>
-              </Link>
-              <Link 
-                href="/careers" 
+                href="/carrier" 
                 className="text-sm transition-all duration-300 group"
                 style={{ 
                   color: hoveredLink === 'Careers' ? '#f0d97c' : '#e6c76b' 

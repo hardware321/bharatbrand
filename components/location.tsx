@@ -98,9 +98,9 @@ const Locations: React.FC = () => {
       icon: Phone,
       title: 'Phone Numbers',
       details: [
-        'Main: +91-XXXX-XXXXXX',
-        'Emergency: +91-XXXX-XXXXXX',
-        'WhatsApp: +91-XXXX-XXXXXX'
+        'Main: +91 93514 11126',
+        'Emergency: +91 90243 11126',
+        'WhatsApp: ++91 97834 17878'
       ]
     },
     {
@@ -291,9 +291,10 @@ const Locations: React.FC = () => {
                 <Button 
                   size="lg" 
                   className="bg-white text-red-600 hover:bg-gray-100 font-semibold px-8 py-4 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                  onClick={() => window.location.href = 'tel:+919783417878'}
                 >
                   <Phone className="mr-2 h-5 w-5" />
-                  Call Emergency: +91-XXXX-XXXXXX
+                  Call Emergency: +91 97834 17878
                 </Button>
               </div>
             </CardContent>
