@@ -501,7 +501,7 @@ Looking forward to hearing from you!`;
                     className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white px-8 py-4 rounded-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105 text-lg font-bold"
                   >
                     <Send className="mr-2 h-5 w-5" />
-                    Submit Application via WhatsApp
+                    Submit Application
                   </Button>
                   <p className="text-sm text-gray-600 mt-3">
                     Your application details will be sent to our HR team via WhatsApp
