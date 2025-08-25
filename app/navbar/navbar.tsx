@@ -26,13 +26,13 @@ const MegaDiagnosticsNavbar = () => {
     { 
       name: 'Interventional Radiology', 
       href: '#Minimally-Invasive-Treatments',
-      dropdown: ['Minimally Invasive Treatments', 'IPD Facilities', 'Emergency Procedures', 'Expert Care']
+      dropdown: ['Gastro', 'Ortho', 'Uro', 'Nephro', 'Surgeons','Onco','Vascular']
     },
     { 
       name: 'About Us', 
       href: 'about',
     },
-    { 
+    {  
       name: 'Contact Us', 
       href: 'Book'
     }
