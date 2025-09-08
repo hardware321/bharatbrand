@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Menu, X, ChevronDown, Clock, Stethoscope, Calendar } from 'lucide-react';
-import newlogo from "../../public/Mega_Logo_Side.png"
+import newlogo from "../../public/logonew.png"
 import Image from 'next/image';
 import Link from 'next/link';
 import Whatsappbutton from '@/components/Whatsappbutton';
