@@ -430,9 +430,8 @@ function MedicalServices() {
               Why Choose Mega Diagnostics?
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { icon: Shield, title: 'NABL Accredited', description: 'Quality assured testing with international standards' },
                 { icon: Zap, title: 'Rapid Results', description: 'Fast turnaround times with accurate reporting' },
                 { icon: TrendingUp, title: 'Advanced Technology', description: 'State-of-the-art equipment and automated systems' },
                 { icon: Users, title: 'Expert Team', description: 'Experienced pathologists and radiologists' }

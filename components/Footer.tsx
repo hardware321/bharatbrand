@@ -34,7 +34,7 @@ const MegaDiagnosticsFooter = () => {
     { name: 'Our Services', href: '#services' },
     { name: 'Book Test', href: '/Book' },
     { name: 'Contact Us', href: '/Book' },
-    { name: 'carrier', href: '/carrier' }
+    { name: 'Career', href: '/career' }
   ];
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -346,7 +346,7 @@ const MegaDiagnosticsFooter = () => {
                 </span>
               </Link>
               <Link 
-                href="/carrier" 
+                href="/career" 
                 className="text-sm transition-all duration-300 group"
                 style={{ 
                   color: hoveredLink === 'Careers' ? '#f0d97c' : '#e6c76b' 
@@ -373,13 +373,7 @@ const MegaDiagnosticsFooter = () => {
               <p className="text-xs font-medium" style={{ color: '#e6c76b' }}>ISO Certified</p>
             </div>
             <div className="text-center group">
-              <div 
-                className="w-12 h-12 rounded-full mx-auto mb-2 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                style={{ background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)' }}
-              >
-                <div className="text-sm font-bold" style={{ color: '#4a1d4a' }}>✓</div>
-              </div>
-              <p className="text-xs font-medium" style={{ color: '#e6c76b' }}>NABH Accredited</p>
+           
             </div>
             <div className="text-center group">
               <div 

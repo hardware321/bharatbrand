@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 function Whatsappbutton() {
       const [isHovered, setIsHovered] = useState(false);
-      
       // Replace this with your actual WhatsApp number (include country code without + sign)
-      const whatsappNumber = "+919783417878"; // Example: 91 for India + your 10-digit number
+      const whatsappNumber = "+919024311126"; // Example: 91 for India + your 10-digit number
       const message = "Hi! I would like to know more about your diagnostic services.";
       
       const handleWhatsAppClick = () => {

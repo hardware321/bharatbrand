@@ -140,7 +140,7 @@ const InterventionalRadiology = () => {
                   </Link>
            <div className='flex justify-center'>
                <a
-                href="https://wa.me/+919783417878" // Replace with your WhatsApp number
+                href="https://wa.me/+919024311126" // Replace with your WhatsApp number
                 target="_blank"
                 rel="noopener noreferrer"
                 className=" w-[300px] md:w-[250px] px-2  py-2 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg border-2 flex items-center justify-center"
