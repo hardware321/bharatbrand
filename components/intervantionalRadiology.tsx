@@ -30,13 +30,6 @@ const InterventionalRadiology = () => {
 
   const procedures = [
     {
-      icon: Heart,
-      title: "Cardiac Interventions",
-      description: "Advanced cardiac procedures including angioplasty, stent placement, and valve repairs",
-      duration: "2-4 hours",
-      recovery: "24-48 hours"
-    },
-    {
       icon: Activity,
       title: "Vascular Interventions",
       description: "Treatment of blocked arteries, aneurysms, and vascular malformations",

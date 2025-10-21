@@ -2,6 +2,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Play, Pause, Stethoscope, Home, Heart, FileText } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import herosection1 from "../public/herosection1.jpg"
+import herosection2 from "../public/herosection2.jpg"
+import herosection3 from "../public/herosection3.jpg"
 
 const NimaayaHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -48,7 +52,7 @@ const NimaayaHeroSection = () => {
       title: "MEGA CARE. MEGA ACCURACY.",
       subtitle: "Advanced Diagnostic and Interventional Radiology Center",
       description: "Rajasthan's first fully digital, automated diagnostic center with cutting-edge technology and expert radiologists from top institutes of India.",
-      image: "https://plus.unsplash.com/premium_photo-1679288660702-987a6fecf262?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: herosection1,
       cta: "Book Diagnostic Test",
       secondary: "View Services"
     },
@@ -57,7 +61,16 @@ const NimaayaHeroSection = () => {
       title: "Precision You Can See",
       subtitle: "State of the Art Facilities & 24x7 Availability",
       description: "From MRI to Interventional Radiology - comprehensive diagnostic services with advanced technology, experienced professionals, and world-class patient care.",
-      image: "https://plus.unsplash.com/premium_photo-1723809656722-ba56481bce5d?q=80&w=1121&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: herosection2,
+      cta: "Emergency Services",
+      secondary: "Contact Us"
+    },
+     {
+      id: 3,
+      title: "Precision You Can See",
+      subtitle: "State of the Art Facilities & 24x7 Availability",
+      description: "From MRI to Interventional Radiology - comprehensive diagnostic services with advanced technology, experienced professionals, and world-class patient care.",
+      image: herosection3,
       cta: "Emergency Services",
       secondary: "Contact Us"
     }
@@ -138,7 +151,7 @@ const NimaayaHeroSection = () => {
 
   return (
     <div className="relative h-[80vh] sm:h-[75vh] md:h-[80vh] pt-[45px] lg:h-screen overflow-hidden bg-gray-900">
-      {/* Background Images */}
+      {/* Background Images - Using Next.js Image component */}
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -146,16 +159,17 @@ const NimaayaHeroSection = () => {
             index === currentSlide ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: `url(${slide.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center center'
-            }}
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            fill
+            priority={index === 0}
+            quality={90}
+            className="object-cover"
+            sizes="100vw"
           />
           {/* Dark overlay for text visibility */}
-          <div className="absolute inset-0 bg-black bg-opacity-50" />
+          <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
         </div>
       ))}
 

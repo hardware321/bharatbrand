@@ -150,16 +150,6 @@ const pathologyServices: Service[] = [
     homeCollection: false
   },
   {
-    icon: Dna,
-    title: 'Cytology',
-    description: 'Cell-based diagnostic testing including FNACs and Pap smears with expert cytopathologist review',
-    tests: ['FNAC', 'Pap Smear', 'Body Fluids', 'Cervical Screening', 'Pleural Fluid', 'CSF Analysis'],
-    category: 'pathology',
-    duration: '1-2 days',
-    accuracy: '98.8%',
-    homeCollection: true
-  },
-  {
     icon: Activity,
     title: 'Microbiology',
     description: 'Cultures, sensitivity testing, and infection diagnosis with antimicrobial susceptibility',
@@ -236,8 +226,8 @@ function MedicalServices() {
   const currentServices = activeTab === 'pathology' ? pathologyServices : radiologyServices;
 
   const stats = [
-    { icon: Award, value: '50,000+', label: 'Tests Performed' },
-    { icon: Users, value: '15,000+', label: 'Happy patients' },
+    { icon: Award, value: '50,00+', label: 'Tests Performed' },
+    { icon: Users, value: '15,00+', label: 'Happy patients' },
     { icon: Target, value: '99.8%', label: 'Accuracy Rate' },
     { icon: Clock, value: '24/7', label: 'Emergency Services' }
   ];

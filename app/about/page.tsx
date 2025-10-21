@@ -3,7 +3,10 @@ import React, { useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import Bharatjain from "../../public/bharat jain.jpg"
+import Bharatjain from "../../public/bharatgupta.jpg"
+import hitesh from "../../public/hitesh.jpg"
+import paranveer from "../../public/pranverr.jpg"
+import bharatjainew from "../../public/bharat jain new.jpg"
 import Locations from '@/components/location';
 import { 
   Award, 
@@ -184,7 +187,7 @@ const MegaAbout: React.FC = () => {
     },
     {
       name: 'Dr. Bharat Jain',
-      src: Bharatjain,
+      src: bharatjainew,
       qualification: 'MD, Radiodiagnosis, Fellowship in Fetal Medicine',
       specialization: 'Consultant Radiologist & Fetal Medicine Expert',
       experience: '12+ Years Experience',
@@ -192,7 +195,7 @@ const MegaAbout: React.FC = () => {
     },
     {
       name: 'Dr. Pranveer Singh Rao',
-      src: Bharatjain,
+      src: paranveer,
       qualification: 'MD, Pathology',
       specialization: 'Consultant Pathologist & Laboratory Medicine',
       experience: '10+ Years Experience',
@@ -200,7 +203,7 @@ const MegaAbout: React.FC = () => {
     },
     {
       name: 'Dr. Hitesh Sharma',
-      src: Bharatjain,
+      src: hitesh,
       qualification: 'Consultant Radiologist',
       specialization: 'Diagnostic Imaging & Radiology Specialist',
       experience: '8+ Years Experience',
@@ -408,7 +411,7 @@ const MegaAbout: React.FC = () => {
             <div className="relative">
               <div className="w-32 h-32 rounded-full mt-12 overflow-hidden ring-4 ring-white shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                 <Image
-                  src={Bharatjain}
+                  src={doctor.src}
                   alt={doctor.name}
                   width={128}
                   height={128}
@@ -510,14 +513,71 @@ const MegaAbout: React.FC = () => {
             ))}
           </div>
         </div>
-      
-   
       </section>
 
+      {/* Video Gallery Section */}
+      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 via-white to-pink-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 md:mb-16 scroll-animate" style={{ opacity: 0, transform: 'translateY(32px)' }}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+              Watch Our Videos
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              Learn more about our services, facilities, and patient care through our video content
+            </p>
+          </div>
 
-         <Locations/>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
+            {/* Video 1 */}
+            <Card className="overflow-hidden shadow-xl border-0 hover:-translate-y-2 transition-all duration-300 scroll-animate bg-white" style={{ opacity: 0, transform: 'scale(0.95)', transitionDelay: '0ms' }}>
+              <CardContent className="p-0">
+                <div className="relative aspect-video bg-gray-900">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/ndA6xmfAWR4"
+                    title="Mega Diagnostics "
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                    First Mega Diagnostic
+                  </h3>
+                  <p className="text-gray-600 text-sm md:text-base">
+                    First Mega Diagnostic & Intervention Centre Opens in Udaipur | Advanced Medical Care Under One Roof
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
 
- 
+            {/* Video 2 */}
+            <Card className="overflow-hidden shadow-xl border-0 hover:-translate-y-2 transition-all duration-300 scroll-animate bg-white" style={{ opacity: 0, transform: 'scale(0.95)', transitionDelay: '100ms' }}>
+              <CardContent className="p-0">
+                <div className="relative aspect-video bg-gray-900">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/AaiHVeJaGX4"
+                    title="Advanced Technology"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <div className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+                    MEGA Diagnostics - Advanced Technology
+                  </h3>
+                  <p className="text-gray-600 text-sm md:text-base">
+                    Mega diagnostics in news 
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <Locations/>
 
     </div>
   );

@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin, Activity, Stethoscope, Send } from 'lucide-react';
 import Link from 'next/link';
+import logo from "../public/Mega_Logo_Side.png"
+import Image from 'next/image';
 
 const MegaDiagnosticsFooter = () => {
   const [decorativeElements, setDecorativeElements] = useState<Array<{
@@ -75,21 +77,26 @@ const MegaDiagnosticsFooter = () => {
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center group">
-              <div 
+              
+              {/* <div 
                 className="p-3 rounded-2xl mr-4 shadow-xl transition-all duration-300 group-hover:scale-110"
                 style={{ 
                   background: 'linear-gradient(135deg, #f0d97c 0%, #e6c76b 100%)'
                 }}
               >
-                <Activity size={24} className="font-bold" style={{ color: '#4a1d4a' }} />
-              </div>
+              
+              </div> */}
               <div>
-                <h2 className="text-2xl font-bold" style={{ color: '#f0d97c' }}>
-                  MEGA DIAGNOSTICS
-                </h2>
-                <p className="text-sm" style={{ color: '#e6c76b' }}>
-                  advanced healthcare imaging
-                </p>
+                  <Image
+                src={logo}
+                alt="Mega Diagnostics Logo"
+                width={170}
+                height={170}
+                className="object-contain"
+                >
+
+                </Image>
+             
               </div>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#e6c76b' }}>
