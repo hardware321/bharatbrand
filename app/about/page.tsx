@@ -4,9 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Bharatjain from "../../public/bharatgupta.jpg"
-import hitesh from "../../public/hitesh.jpg"
+import hitesh from "../../public/hitesh.jpeg"
 import paranveer from "../../public/pranverr.jpg"
-import bharatjainew from "../../public/bharat jain new.jpg"
+import bharatJain from "../../public/bharatJain.jpeg"
 import Locations from '@/components/location';
 import { 
   Award, 
@@ -187,7 +187,7 @@ const MegaAbout: React.FC = () => {
     },
     {
       name: 'Dr. Bharat Jain',
-      src: bharatjainew,
+      src: bharatJain,
       qualification: 'MD, Radiodiagnosis, Fellowship in Fetal Medicine',
       specialization: 'Consultant Radiologist & Fetal Medicine Expert',
       experience: '12+ Years Experience',
