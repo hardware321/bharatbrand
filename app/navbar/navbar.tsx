@@ -162,7 +162,7 @@ const MegaDiagnosticsNavbar = () => {
                 width={220}
                 height={220}
                 src={newlogo} 
-                alt="Mega Diagnostics Logo" 
+                alt="MEGA Diagnostics and Interventions" 
                 />
             </div>
                 </Link>

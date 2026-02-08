@@ -89,7 +89,7 @@ const MegaDiagnosticsFooter = () => {
               <div>
                   <Image
                 src={logo}
-                alt="Mega Diagnostics Logo"
+                alt="MEGA Diagnostics and Interventions"
                 width={170}
                 height={170}
                 className="object-contain"
