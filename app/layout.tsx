@@ -14,7 +14,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Mega Health Care',
+  title: 'MEGA Diagnostics and Interventions',
   description: 'one of the best diagnostic center in udaipur, rajasthan. We provide all types of diagnostic services like CT Scan, MRI, X-Ray, Ultrasound, Pathology and many more.',
 }
 
